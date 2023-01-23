@@ -1,5 +1,7 @@
 class SignInUseCase {
-  constructor({ authValidator, userRepository, authRepository, bcryptHash, jwtTokenManager }) {
+  constructor({
+    authValidator, userRepository, authRepository, bcryptHash, jwtTokenManager,
+  }) {
     this._authValidator = authValidator;
     this._userRepository = userRepository;
     this._authRepository = authRepository;
@@ -10,7 +12,7 @@ class SignInUseCase {
   async execute(payload) {
     try {
       const { email, password } = payload;
-      await this._authValidator.validateSignInPayload( { email, password });
+      await this._authValidator.validateSignInPayload({ email, password });
       await this._userRepository.validateEmailExist(email);
       const user = await this._userRepository.getUserByEmail(email);
       this._bcryptHash.validatePassword(password, user.password);

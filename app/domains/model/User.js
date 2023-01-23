@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
@@ -22,7 +23,7 @@ const userSchema = new Schema({
   password: {
     type: String,
     require: [true, 'password does not exist'],
-  }
-}, { timestamps: true});
+  },
+}, { timestamps: true });
 
 module.exports = mongoose.model('users', userSchema);

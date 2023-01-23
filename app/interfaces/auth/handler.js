@@ -8,6 +8,7 @@ const authValidator = require('../../infrastructures/validator/auth/validator');
 // repository
 const UserRepository = require('../../infrastructures/repository/UserRepository');
 const AuthRepository = require('../../infrastructures/repository/AuthRepository');
+
 const userRepository = new UserRepository();
 const authRepository = new AuthRepository();
 
@@ -15,21 +16,26 @@ const authRepository = new AuthRepository();
 const BcryptHash = require('../../infrastructures/security/BcryptHash');
 const JWTTokenManager = require('../../infrastructures/security/JWTTokenManager');
 const common_functions = require('../../commons/common_functions');
+
 const bcryptHash = new BcryptHash();
 const jwtTokenManager = new JWTTokenManager();
 
 module.exports = {
   signUp: async (req, res) => {
-    const { full_name, phone_number, email, password } = req.body;
+    const {
+      full_name, phone_number, email, password,
+    } = req.body;
 
     try {
       const signUpUseCase = new SignUpUseCase(
-        { authValidator, userRepository, bcryptHash }
+        { authValidator, userRepository, bcryptHash },
       );
-      const data = await signUpUseCase.execute({ full_name, phone_number, email, password });
+      const data = await signUpUseCase.execute({
+        full_name, phone_number, email, password,
+      });
 
       return res.status(201).json({
-        status: "success",
+        status: 'success',
         message: 'Success register user',
         data,
       });
@@ -37,7 +43,7 @@ module.exports = {
       return common_functions.handlerErrorHandler(res, err);
     }
   },
-  signIn : async (req, res) => {
+  signIn: async (req, res) => {
     const { email, password } = req.body;
 
     try {
@@ -47,13 +53,13 @@ module.exports = {
           userRepository,
           authRepository,
           bcryptHash,
-          jwtTokenManager
-        }
+          jwtTokenManager,
+        },
       );
       const data = await signInUseCase.execute({ email, password });
 
       return res.status(200).json({
-        status: "success",
+        status: 'success',
         message: 'User logged in successfully',
         data,
       });

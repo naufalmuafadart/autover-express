@@ -24,7 +24,7 @@ class UserRepository {
   }
 
   async validatePhoneNumberDoesNotExist(phone_number) {
-    const check = await User.findOne({ phone_number  });
+    const check = await User.findOne({ phone_number });
     if (check !== null) throw new InvariantError('Phone number already registered');
   }
 }
