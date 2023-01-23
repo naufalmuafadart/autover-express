@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const authRouter = require('./app/auth/router');
+const authRouter = require('./app/interfaces/auth/router');
 
 const app = express();
 

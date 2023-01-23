@@ -1,5 +1,5 @@
 const { signUpPayloadSchema, signInPayloadSchema } = require('./schema');
-const InvariantError = require('../../../exceptions/InvariantError');
+const InvariantError = require('../../../commons/exceptions/InvariantError');
 
 const authValidator = {
   validateSignUpPayload : async (payload) => {
