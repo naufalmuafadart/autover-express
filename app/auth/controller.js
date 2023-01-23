@@ -1,8 +1,9 @@
 const User = require('../user/model');
 const Auth = require('./model');
+const authValidator = require('./validator/validator');
+const userValidator = require('../user/validator/validator');
 
 const ClientError = require("../../exceptions/ClientError");
-const InvariantError = require("../../exceptions/InvariantError");
 
 require('dotenv').config();
 const bcrypt = require('bcrypt');
@@ -13,23 +14,10 @@ module.exports = {
     const { full_name, phone_number, email, password } = req.body;
 
     try {
+      await authValidator.validateSignUpPayload( { full_name, phone_number, email, password });
+      await userValidator.validateEmailNotRegistered(email);
+      await userValidator.validatePhoneNumberNotRegistered(phone_number);
       const hashedPassword = bcrypt.hashSync(password, 10);
-      let checkUser = await User.find({ email });
-
-      // Check if email is registered
-      if (checkUser.length) {
-        throw new InvariantError("Email already registered");
-      }
-
-      // Check if phone number is registered
-      checkUser = await User.find({ phone_number });
-      if (checkUser.length) {
-        throw new InvariantError("Phone number already registered");
-      }
-
-      if (password.length < 8) {
-        throw new InvariantError("Password length must equal or more than 8");
-      }
 
       const user = new User({ full_name, phone_number, email, password: hashedPassword });
       await user.save();
@@ -63,17 +51,11 @@ module.exports = {
     const { email, password } = req.body;
 
     try {
+      await authValidator.validateSignInPayload({ email, password });
+      await userValidator.validateEmailIsRegistered(email);
+
       const user = await User.findOne({ email });
-
-      // Check if email is not registered
-      if (!user) {
-        throw new InvariantError("Email not found");
-      }
-
-      // check password is valid
-      if (!bcrypt.compareSync(password, user.password)) {
-        throw new InvariantError("Invalid password");
-      }
+      await userValidator.validatePasswordIsCorrect(user._id, password);
 
       // create access token and refresh token
       const accessToken = jwt.sign(
