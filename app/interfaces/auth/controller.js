@@ -14,6 +14,7 @@ const authRepository = new AuthRepository();
 // tools
 const BcryptHash = require('../../infrastructures/security/BcryptHash');
 const JWTTokenManager = require('../../infrastructures/security/JWTTokenManager');
+const common_functions = require('../../commons/common_functions');
 const bcryptHash = new BcryptHash();
 const jwtTokenManager = new JWTTokenManager();
 
@@ -35,23 +36,7 @@ module.exports = {
         data,
       });
     } catch (err) {
-      console.log(err);
-
-      if (err instanceof ClientError) {
-        return res.status(err.statusCode).json(
-          {
-            status: "fail",
-            message: err.message,
-          }
-        );
-      }
-
-      return res.status(500).json(
-        {
-          status: "fail",
-          message: "Internal server error",
-        }
-      );
+      return common_functions.handlerErrorHandler(res, err);
     }
   },
   signIn : async (req, res) => {
@@ -59,7 +44,13 @@ module.exports = {
 
     try {
       const signInUseCase = new SignInUseCase(
-        { authValidator, userRepository, authRepository, bcryptHash, jwtTokenManager }
+        {
+          authValidator,
+          userRepository,
+          authRepository,
+          bcryptHash,
+          jwtTokenManager
+        }
       );
       const data = await signInUseCase.execute({ email, password });
 
@@ -69,23 +60,7 @@ module.exports = {
         data,
       });
     } catch (err) {
-      console.log(err);
-
-      if (err instanceof ClientError) {
-        return res.status(err.statusCode).json(
-          {
-            status: "fail",
-            message: err.message,
-          }
-        );
-      }
-
-      return res.status(500).json(
-        {
-          status: "fail",
-          message: "Internal server error",
-        }
-      );
+      return common_functions.handlerErrorHandler(res, err);
     }
   },
 };
