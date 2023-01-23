@@ -18,8 +18,6 @@ const common_functions = require('../../commons/common_functions');
 const bcryptHash = new BcryptHash();
 const jwtTokenManager = new JWTTokenManager();
 
-const ClientError = require("../../commons/exceptions/ClientError");
-
 module.exports = {
   signUp: async (req, res) => {
     const { full_name, phone_number, email, password } = req.body;
