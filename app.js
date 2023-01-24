@@ -15,8 +15,9 @@ const app = express();
 async function main() {
   await mongoose.connect('mongodb://127.0.0.1:27017/autover');
 }
-main().catch(err => {
-  console.log(err)
+main().catch((err) => {
+  // eslint-disable-next-line no-console
+  console.log(err);
 }).finally(() => {});
 
 // view engine setup
@@ -34,12 +35,12 @@ app.use('/', authRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to exceptions handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // exceptions handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing exceptions in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

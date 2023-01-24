@@ -20,7 +20,8 @@ describe('A BcryptHash class', () => {
 
     it('should not throw error when password is valid', async () => {
       const hashedPassword = await bcryptHash.hashString(plain_password);
-      expect(() => bcryptHash.validatePassword(plain_password, hashedPassword)).not.toThrow(InvariantError);
+      expect(() => bcryptHash.validatePassword(plain_password, hashedPassword))
+        .not.toThrow(InvariantError);
     });
 
     it('should throw error when password is not valid', async () => {

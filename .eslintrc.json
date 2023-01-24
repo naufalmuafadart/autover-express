@@ -16,6 +16,7 @@
         "no-underscore-dangle": "off",
         "no-useless-catch": "off",
         "camelcase": "off",
-        "class-methods-use-this": "off"
+        "class-methods-use-this": "off",
+        "import/no-extraneous-dependencies": "off"
     }
 }

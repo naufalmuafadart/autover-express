@@ -7,6 +7,6 @@ const authSchema = new Schema({
     type: String,
     require: [true, 'Refresh token does not exist'],
   },
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('auth', authSchema);

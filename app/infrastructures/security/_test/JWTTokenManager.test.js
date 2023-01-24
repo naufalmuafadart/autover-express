@@ -1,5 +1,4 @@
 const JWTTokenManager = require('../JWTTokenManager');
-const {object, number} = require("joi");
 
 describe('A JWT Token Manager class', () => {
   const jwtTokenManager = new JWTTokenManager();
