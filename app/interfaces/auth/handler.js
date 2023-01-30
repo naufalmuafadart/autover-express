@@ -1,3 +1,5 @@
+const container = require('../../infrastructures/container');
+
 // use case
 const SignUpUseCase = require('../../applications/use_case/SignUpUseCase');
 const SignInUseCase = require('../../applications/use_case/SignInUseCase');
@@ -6,11 +8,8 @@ const SignInUseCase = require('../../applications/use_case/SignInUseCase');
 const authValidator = require('../../infrastructures/validator/auth/validator');
 
 // repository
-const UserRepository = require('../../infrastructures/repository/UserRepository');
-const AuthRepository = require('../../infrastructures/repository/AuthRepository');
-
-const userRepository = new UserRepository();
-const authRepository = new AuthRepository();
+const UserRepository = require('../../domains/user/UserRepository');
+const AuthRepository = require('../../domains/auth/AuthRepository');
 
 // tools
 const BcryptHash = require('../../infrastructures/security/BcryptHash');
@@ -28,7 +27,11 @@ module.exports = {
 
     try {
       const signUpUseCase = new SignUpUseCase(
-        { authValidator, userRepository, bcryptHash },
+        {
+          authValidator,
+          userRepository: container.getInstance(UserRepository.name),
+          bcryptHash,
+        },
       );
       const data = await signUpUseCase.execute({
         full_name, phone_number, email, password,
@@ -50,8 +53,8 @@ module.exports = {
       const signInUseCase = new SignInUseCase(
         {
           authValidator,
-          userRepository,
-          authRepository,
+          userRepository: container.getInstance(UserRepository.name),
+          authRepository: container.getInstance(AuthRepository.name),
           bcryptHash,
           jwtTokenManager,
         },

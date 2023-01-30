@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
+    "dev": "nodemon ./bin/www",
+    "start": "node ./bin/www",
     "lint": "npx eslint app/",
     "jest": "jest"
   },
@@ -16,6 +17,7 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "instances-container": "^2.0.6",
     "joi": "^17.7.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.4",

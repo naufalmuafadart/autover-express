@@ -1,32 +1,37 @@
-const User = require('../../domains/model/User');
+const UserRepository = require('../../domains/user/UserRepository');
 const InvariantError = require('../../commons/exceptions/InvariantError');
 
-class UserRepository {
+class UserRepositoryMongo extends UserRepository {
+  constructor(User) {
+    super();
+    this._User = User;
+  }
+
   async addUser(payload) {
-    const user = new User(payload);
+    const user = new this._User(payload);
     await user.save();
   }
 
   async getUserByEmail(email) {
-    const user = await User.findOne({ email });
+    const user = await this._User.findOne({ email });
     if (user === null) throw new InvariantError('Email not registered');
     return user;
   }
 
   async validateEmailExist(email) {
-    const check = await User.findOne({ email });
+    const check = await this._User.findOne({ email });
     if (check === null) throw new InvariantError('Email not registered');
   }
 
   async validateEmailDoesNotExist(email) {
-    const check = await User.findOne({ email });
+    const check = await this._User.findOne({ email });
     if (check !== null) throw new InvariantError('Email already registered');
   }
 
   async validatePhoneNumberDoesNotExist(phone_number) {
-    const check = await User.findOne({ phone_number });
+    const check = await this._User.findOne({ phone_number });
     if (check !== null) throw new InvariantError('Phone number already registered');
   }
 }
 
-module.exports = UserRepository;
+module.exports = UserRepositoryMongo;
