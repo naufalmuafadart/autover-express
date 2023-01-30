@@ -4,8 +4,8 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const mongoose = require('mongoose');
 const cors = require('cors');
+const { connect: connectToDB } = require('./config/db');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -19,10 +19,7 @@ const app = express();
 app.use(cors(corsOptions));
 
 // mongoose
-async function main() {
-  await mongoose.connect(process.env.MONGO_URL);
-}
-main().catch((err) => {
+connectToDB().catch((err) => {
   // eslint-disable-next-line no-console
   console.log(err);
 }).finally(() => {});
@@ -47,6 +44,7 @@ app.use((req, res, next) => {
 });
 
 // exceptions handler
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   // set locals, only providing exceptions in development
   res.locals.message = err.message;
