@@ -1,8 +1,8 @@
 class SignUpUseCase {
-  constructor({ authValidator, userRepository, bcryptHash }) {
+  constructor({ authValidator, userRepository, passwordHash }) {
     this._authValidator = authValidator;
     this._userRepository = userRepository;
-    this._bcryptHash = bcryptHash;
+    this._passwordHash = passwordHash;
   }
 
   async execute(payload) {
@@ -15,7 +15,7 @@ class SignUpUseCase {
       });
       await this._userRepository.validateEmailDoesNotExist(email);
       await this._userRepository.validatePhoneNumberDoesNotExist(phone_number);
-      const hashedPassword = await this._bcryptHash.hashString(password);
+      const hashedPassword = await this._passwordHash.hashString(password);
       await this._userRepository.addUser({
         full_name, phone_number, email, password: hashedPassword,
       });

@@ -22,10 +22,21 @@ const UserRepositoryMongo = require('./repository/UserRepositoryMongo');
 const BcryptHash = require('./security/BcryptHash');
 const JWTTokenManager = require('./security/JWTTokenManager');
 
-// Mongoose mongoose_model
+// Mongoose model
 const Auth = require('../domains/mongoose_model/Auth');
 const Host = require('../domains/mongoose_model/Host');
 const User = require('../domains/mongoose_model/User');
+
+// use case
+const CreateHostUseCase = require('../applications/use_case/CreateHostUseCase');
+const SignInUseCase = require('../applications/use_case/SignInUseCase');
+const SignUpUseCase = require('../applications/use_case/SignUpUseCase');
+
+// validator
+const AuthValidator = require('../applications/validator/AuthValidator');
+
+// validator infrastructure
+const AuthValidatorJoi = require('./validator/auth/AuthValidatorJoi');
 
 const container = createContainer();
 
@@ -78,6 +89,81 @@ container.register([
       dependencies: [{
         concrete: JWT,
       }],
+    },
+  },
+]);
+
+// registering validator
+container.register([
+  {
+    key: AuthValidator.name,
+    Class: AuthValidatorJoi,
+  },
+]);
+
+// registering use case
+container.register([
+  {
+    key: CreateHostUseCase.name,
+    Class: CreateHostUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'hostRepository',
+          internal: HostRepository.name,
+        },
+      ],
+    },
+  },
+  {
+    key: SignInUseCase.name,
+    Class: SignInUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'authValidator',
+          internal: AuthValidator.name,
+        },
+        {
+          name: 'userRepository',
+          internal: UserRepository.name,
+        },
+        {
+          name: 'authRepository',
+          internal: AuthRepository.name,
+        },
+        {
+          name: 'passwordHash',
+          internal: PasswordHash.name,
+        },
+        {
+          name: 'authenticationTokenManager',
+          internal: AuthenticationTokenManager.name,
+        },
+      ],
+    },
+  },
+  {
+    key: SignUpUseCase.name,
+    Class: SignUpUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'authValidator',
+          internal: AuthValidator.name,
+        },
+        {
+          name: 'userRepository',
+          internal: UserRepository.name,
+        },
+        {
+          name: 'passwordHash',
+          internal: PasswordHash.name,
+        },
+      ],
     },
   },
 ]);

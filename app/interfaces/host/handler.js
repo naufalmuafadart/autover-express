@@ -3,9 +3,6 @@ const container = require('../../infrastructures/container');
 // use case
 const CreateHostUseCase = require('../../applications/use_case/CreateHostUseCase');
 
-// repository
-const HostRepository = require('../../domains/host/HostRepository');
-
 // tools
 const common_functions = require('../../commons/common_functions');
 
@@ -14,9 +11,7 @@ module.exports = {
     const { user_id, district } = req.body;
 
     try {
-      const createHostUseCase = new CreateHostUseCase({
-        hostRepository: container.getInstance(HostRepository.name),
-      });
+      const createHostUseCase = container.getInstance(CreateHostUseCase.name);
       await createHostUseCase.execute({ user_id, district });
 
       return res.status(201).json({

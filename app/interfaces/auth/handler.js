@@ -4,16 +4,7 @@ const container = require('../../infrastructures/container');
 const SignUpUseCase = require('../../applications/use_case/SignUpUseCase');
 const SignInUseCase = require('../../applications/use_case/SignInUseCase');
 
-// validator
-const authValidator = require('../../infrastructures/validator/auth/validator');
-
-// repository
-const UserRepository = require('../../domains/user/UserRepository');
-const AuthRepository = require('../../domains/auth/AuthRepository');
-
 // tools
-const PasswordHash = require('../../applications/security/PasswordHash');
-const AuthenticationTokenManager = require('../../applications/security/AuthenticationTokenManager');
 const common_functions = require('../../commons/common_functions');
 
 module.exports = {
@@ -23,13 +14,7 @@ module.exports = {
     } = req.body;
 
     try {
-      const signUpUseCase = new SignUpUseCase(
-        {
-          authValidator,
-          userRepository: container.getInstance(UserRepository.name),
-          bcryptHash: container.getInstance(PasswordHash.name),
-        },
-      );
+      const signUpUseCase = container.getInstance(SignUpUseCase.name);
       const data = await signUpUseCase.execute({
         full_name, phone_number, email, password,
       });
@@ -47,15 +32,7 @@ module.exports = {
     const { email, password } = req.body;
 
     try {
-      const signInUseCase = new SignInUseCase(
-        {
-          authValidator,
-          userRepository: container.getInstance(UserRepository.name),
-          authRepository: container.getInstance(AuthRepository.name),
-          bcryptHash: container.getInstance(PasswordHash.name),
-          jwtTokenManager: container.getInstance(AuthenticationTokenManager.name),
-        },
-      );
+      const signInUseCase = container.getInstance(SignInUseCase.name);
       const data = await signInUseCase.execute({ email, password });
 
       return res.status(200).json({
