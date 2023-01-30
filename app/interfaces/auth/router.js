@@ -4,7 +4,7 @@ const router = express.Router();
 
 const { signUp, signIn } = require('./handler');
 
-router.post('/auth/signup', signUp);
-router.post('/auth/signin', signIn);
+router.post('/signup', signUp);
+router.post('/signin', signIn);
 
 module.exports = router;

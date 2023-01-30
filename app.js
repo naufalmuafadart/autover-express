@@ -7,9 +7,8 @@ const logger = require('morgan');
 const cors = require('cors');
 const { connect: connectToDB } = require('./config/db');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 const authRouter = require('./app/interfaces/auth/router');
+const hostRouter = require('./app/interfaces/host/router');
 
 // cors
 const corsOptions = { origin: process.env.FRONT_END_ORIGIN };
@@ -34,9 +33,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/', authRouter);
-app.use('/users', usersRouter);
+app.use('/auth', authRouter);
+app.use('/host', hostRouter);
 
 // catch 404 and forward to exceptions handler
 app.use((req, res, next) => {
