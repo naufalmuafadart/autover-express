@@ -1,14 +1,18 @@
 require('dotenv').config();
+const AuthenticationTokenManager = require('../../applications/security/AuthenticationTokenManager');
 
-const JWT = require('jsonwebtoken');
+class JWTTokenManager extends AuthenticationTokenManager {
+  constructor(JWT) {
+    super();
+    this._JWT = JWT;
+  }
 
-class JWTTokenManager {
   async createAccessToken(payload) {
-    return JWT.sign(payload, process.env.ACCESS_TOKEN_KEY, { expiresIn: 15 });
+    return this._JWT.sign(payload, process.env.ACCESS_TOKEN_KEY, { expiresIn: 15 });
   }
 
   async createRefreshToken(payload) {
-    return JWT.sign(payload, process.env.REFRESH_TOKEN_KEY, { expiresIn: '60d' });
+    return this._JWT.sign(payload, process.env.REFRESH_TOKEN_KEY, { expiresIn: '60d' });
   }
 }
 

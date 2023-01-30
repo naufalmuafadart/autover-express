@@ -12,12 +12,9 @@ const UserRepository = require('../../domains/user/UserRepository');
 const AuthRepository = require('../../domains/auth/AuthRepository');
 
 // tools
-const BcryptHash = require('../../infrastructures/security/BcryptHash');
-const JWTTokenManager = require('../../infrastructures/security/JWTTokenManager');
+const PasswordHash = require('../../applications/security/PasswordHash');
+const AuthenticationTokenManager = require('../../applications/security/AuthenticationTokenManager');
 const common_functions = require('../../commons/common_functions');
-
-const bcryptHash = new BcryptHash();
-const jwtTokenManager = new JWTTokenManager();
 
 module.exports = {
   signUp: async (req, res) => {
@@ -30,7 +27,7 @@ module.exports = {
         {
           authValidator,
           userRepository: container.getInstance(UserRepository.name),
-          bcryptHash,
+          bcryptHash: container.getInstance(PasswordHash.name),
         },
       );
       const data = await signUpUseCase.execute({
@@ -55,8 +52,8 @@ module.exports = {
           authValidator,
           userRepository: container.getInstance(UserRepository.name),
           authRepository: container.getInstance(AuthRepository.name),
-          bcryptHash,
-          jwtTokenManager,
+          bcryptHash: container.getInstance(PasswordHash.name),
+          jwtTokenManager: container.getInstance(AuthenticationTokenManager.name),
         },
       );
       const data = await signInUseCase.execute({ email, password });

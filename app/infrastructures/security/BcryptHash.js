@@ -1,13 +1,18 @@
-const bcrypt = require('bcrypt');
 const InvariantError = require('../../commons/exceptions/InvariantError');
+const PasswordHash = require('../../applications/security/PasswordHash');
 
-class BcryptHash {
+class BcryptHash extends PasswordHash {
+  constructor(bcrypt) {
+    super();
+    this._bcrypt = bcrypt;
+  }
+
   async hashString(text) {
-    return bcrypt.hash(text, 10);
+    return this._bcrypt.hash(text, 10);
   }
 
   validatePassword(password, hashedPassword) {
-    if (!bcrypt.compareSync(password, hashedPassword)) {
+    if (!this._bcrypt.compareSync(password, hashedPassword)) {
       throw new InvariantError('Password incorrect');
     }
   }
