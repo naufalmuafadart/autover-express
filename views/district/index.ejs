@@ -32,38 +32,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>63d7bbd46594e9d79d1d0f0d</td>
-                    <td>Batununggal</td>
-                    <td>
-                        <button type="button" class="btn btn-primary">Edit</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>63d7bbd46594e9d79d1d0f0d</td>
-                    <td>Antapani</td>
-                    <td>
-                        <button type="button" class="btn btn-primary">Edit</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>63d7bbd46594e9d79d1d0f0d</td>
-                    <td>Cibeunying</td>
-                    <td>
-                        <button type="button" class="btn btn-primary">Edit</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>63d7bbd46594e9d79d1d0f0d</td>
-                    <td>Buah Batu</td>
-                    <td>
-                        <button type="button" class="btn btn-primary">Edit</button>
-                    </td>
-                </tr>
+                    <% for(let i=0; i < districts.length; i++) { %>
+                        <tr>
+                            <td><%= i + 1 %></td>
+                            <td><%= districts[i]._id %></td>
+                            <td><%= districts[i].name %></td>
+                            <td>
+                                <button type="button" class="btn btn-primary">Edit</button>
+                            </td>
+                        </tr>
+                    <% } %>
                 </tbody>
             </table>
         </div>

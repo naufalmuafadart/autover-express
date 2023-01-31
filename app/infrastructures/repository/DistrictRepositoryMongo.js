@@ -10,6 +10,10 @@ class DistrictRepositoryMongo extends DistrictRepository {
     const district = await new this._District({ name });
     await district.save();
   }
+
+  async getDistricts() {
+    return this._District.find({});
+  }
 }
 
 module.exports = DistrictRepositoryMongo;

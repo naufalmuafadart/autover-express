@@ -1,11 +1,20 @@
 const container = require('../../infrastructures/container');
 
 const CreateDistrictUseCase = require('../../applications/use_case/CreateDistrictUseCase');
+const ViewDistrictUseCase = require('../../applications/use_case/ViewDistrictUseCase');
 const common_functions = require('../../commons/common_functions');
 
 module.exports = {
   index: (req, res) => res.render('index'),
-  getDistrict: (req, res) => res.render('./district/index'),
+  getDistrict: async (req, res) => {
+    try {
+      const viewDistrictUseCase = container.getInstance(ViewDistrictUseCase.name);
+      const districts = await viewDistrictUseCase.execute();
+      return res.render('./district/index', { districts });
+    } catch (err) {
+      return common_functions.handlerErrorHandler(res, err);
+    }
+  },
   addDistrict: (req, res) => res.render('./district/create'),
   postDistrict: async (req, res) => {
     try {
@@ -19,7 +28,6 @@ module.exports = {
         message: 'success add district',
       });
     } catch (err) {
-      console.log(err);
       return common_functions.handlerErrorHandler(res, err);
     }
   },
