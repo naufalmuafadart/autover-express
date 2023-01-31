@@ -7,6 +7,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const { connect: connectToDB } = require('./config/db');
 
+const adminRouter = require('./app/interfaces/admin/router');
 const authRouter = require('./app/interfaces/auth/router');
 const hostRouter = require('./app/interfaces/host/router');
 
@@ -33,6 +34,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/admin', adminRouter);
 app.use('/auth', authRouter);
 app.use('/host', hostRouter);
 
