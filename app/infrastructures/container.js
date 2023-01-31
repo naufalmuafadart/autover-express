@@ -8,6 +8,7 @@ const JWT = require('jsonwebtoken');
 const AuthRepository = require('../domains/auth/AuthRepository');
 const HostRepository = require('../domains/host/HostRepository');
 const UserRepository = require('../domains/user/UserRepository');
+const DistrictRepository = require('../domains/district/DistrictRepository');
 
 // service
 const PasswordHash = require('../applications/security/PasswordHash');
@@ -17,6 +18,7 @@ const AuthenticationTokenManager = require('../applications/security/Authenticat
 const AuthRepositoryMongo = require('./repository/AuthRepositoryMongo');
 const HostRepositoryMongo = require('./repository/HostRepositoryMongo');
 const UserRepositoryMongo = require('./repository/UserRepositoryMongo');
+const DistrictRepositoryMongo = require('./repository/DistrictRepositoryMongo');
 
 // service infrastructure
 const BcryptHash = require('./security/BcryptHash');
@@ -26,8 +28,10 @@ const JWTTokenManager = require('./security/JWTTokenManager');
 const Auth = require('../domains/mongoose_model/Auth');
 const Host = require('../domains/mongoose_model/Host');
 const User = require('../domains/mongoose_model/User');
+const District = require('../domains/mongoose_model/District');
 
 // use case
+const CreateDistrictUseCase = require('../applications/use_case/CreateDistrictUseCase');
 const CreateHostUseCase = require('../applications/use_case/CreateHostUseCase');
 const SignInUseCase = require('../applications/use_case/SignInUseCase');
 const SignUpUseCase = require('../applications/use_case/SignUpUseCase');
@@ -66,6 +70,15 @@ container.register([
     parameter: {
       dependencies: [{
         concrete: User,
+      }],
+    },
+  },
+  {
+    key: DistrictRepository.name,
+    Class: DistrictRepositoryMongo,
+    parameter: {
+      dependencies: [{
+        concrete: District,
       }],
     },
   },
@@ -162,6 +175,19 @@ container.register([
         {
           name: 'passwordHash',
           internal: PasswordHash.name,
+        },
+      ],
+    },
+  },
+  {
+    key: CreateDistrictUseCase.name,
+    Class: CreateDistrictUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'districtRepository',
+          internal: DistrictRepository.name,
         },
       ],
     },
