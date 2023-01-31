@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include ./partials/head.ejs %>
+<%- include ../partials/head.ejs %>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
     <!--  Navbar -->
-    <%- include ./partials/navbar.ejs %>
+    <%- include ../partials/navbar.ejs %>
 
     <!--  Sidebar -->
-    <%- include ./partials/sidebar.ejs %>
+    <%- include ../partials/sidebar.ejs %>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -15,7 +15,7 @@
         <div class="content-header">
             <div class="d-flex justify-content-between">
                 <h1>Kecamatan</h1>
-                <button type="button" class="btn btn-primary">Tambah</button>
+                <button type="button" class="btn btn-primary" id="btnAdd">Tambah</button>
             </div>
         </div>
         <!-- /.content-header -->
@@ -73,6 +73,7 @@
 </div>
 <!-- ./wrapper -->
 
-<%- include ./partials/script.ejs %>
+<%- include ../partials/script.ejs %>
+<script type="text/javascript" src="/script/page/district/index.js"></script>
 </body>
 </html>
