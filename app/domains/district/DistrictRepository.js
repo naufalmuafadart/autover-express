@@ -8,6 +8,14 @@ class DistrictRepository {
   async getDistricts() {
     throw Error('DISTRICT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }
+
+  async getDistrict(id) {
+    throw Error('DISTRICT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+  }
+
+  async editDistrict(id, name) {
+    throw Error('DISTRICT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+  }
 }
 
 module.exports = DistrictRepository;

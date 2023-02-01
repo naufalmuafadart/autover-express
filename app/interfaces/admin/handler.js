@@ -2,6 +2,7 @@ const container = require('../../infrastructures/container');
 
 const CreateDistrictUseCase = require('../../applications/use_case/CreateDistrictUseCase');
 const ViewDistrictUseCase = require('../../applications/use_case/ViewDistrictUseCase');
+const ViewEditDistrictUseCase = require('../../applications/use_case/ViewEditDistrictUseCase');
 const common_functions = require('../../commons/common_functions');
 
 module.exports = {
@@ -27,6 +28,16 @@ module.exports = {
         status: 'success',
         message: 'success add district',
       });
+    } catch (err) {
+      return common_functions.handlerErrorHandler(res, err);
+    }
+  },
+  editDistrict: async (req, res) => {
+    const { id } = req.params;
+    try {
+      const viewEditDistrictUseCase = container.getInstance(ViewEditDistrictUseCase.name);
+      const district = await viewEditDistrictUseCase.execute(id);
+      return res.render('./district/edit', { district });
     } catch (err) {
       return common_functions.handlerErrorHandler(res, err);
     }

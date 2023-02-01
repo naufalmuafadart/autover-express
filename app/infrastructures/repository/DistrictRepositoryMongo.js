@@ -14,6 +14,22 @@ class DistrictRepositoryMongo extends DistrictRepository {
   async getDistricts() {
     return this._District.find({});
   }
+
+  async getDistrict(id) {
+    try {
+      return this._District.findById(id);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  async editDistrict(id, name) {
+    try {
+      await this._District.findByIdAndUpdate(id, { name });
+    } catch (e) {
+      throw e;
+    }
+  }
 }
 
 module.exports = DistrictRepositoryMongo;

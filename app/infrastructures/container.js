@@ -36,6 +36,7 @@ const CreateHostUseCase = require('../applications/use_case/CreateHostUseCase');
 const SignInUseCase = require('../applications/use_case/SignInUseCase');
 const SignUpUseCase = require('../applications/use_case/SignUpUseCase');
 const ViewDistrictUseCase = require('../applications/use_case/ViewDistrictUseCase');
+const ViewEditDistrictUseCase = require('../applications/use_case/ViewEditDistrictUseCase');
 
 // validator
 const AuthValidator = require('../applications/validator/AuthValidator');
@@ -196,6 +197,19 @@ container.register([
   {
     key: ViewDistrictUseCase.name,
     Class: ViewDistrictUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'districtRepository',
+          internal: DistrictRepository.name,
+        },
+      ],
+    },
+  },
+  {
+    key: ViewEditDistrictUseCase.name,
+    Class: ViewEditDistrictUseCase,
     parameter: {
       injectType: 'destructuring',
       dependencies: [

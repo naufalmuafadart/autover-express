@@ -13,7 +13,7 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="content-header">
-            <h1>Tambah Kecamatan</h1>
+            <h1>Ubah Kecamatan</h1>
         </div>
         <!-- /.content-header -->
 
@@ -30,12 +30,14 @@
                                     id="inputName"
                                     name="name"
                                     placeholder="Nama kecamatan"
+                                    value="<%= district.name %>"
                                     required
                             >
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary float-right">Tambah</button>
+                <input type="hidden" value="<%= district._id %>" name="id" />
+                <button type="submit" class="btn btn-primary float-right">Ubah</button>
             </form>
         </div>
         <!-- /.content -->
