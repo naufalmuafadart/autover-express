@@ -8,7 +8,7 @@ formAdd.onsubmit = async (e) => {
   const urlencoded = new URLSearchParams();
   urlencoded.append('name', inputName.value);
 
-  const response = await fetch('/admin/district', {
+  const response = await fetch('/district', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
@@ -16,6 +16,6 @@ formAdd.onsubmit = async (e) => {
     body: urlencoded,
   });
   if (response.status === 201) {
-    window.location.href = '/admin/district';
+    window.location.href = '/district';
   }
 };

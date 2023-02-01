@@ -35,9 +35,9 @@ app.use(bodyParser.json({ type: 'application/*+json' }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/admin', adminRouter);
-app.use('/auth', authRouter);
-app.use('/host', hostRouter);
+app.use('/', adminRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/host', hostRouter);
 
 // catch 404 and forward to exceptions handler
 app.use((req, res, next) => {
