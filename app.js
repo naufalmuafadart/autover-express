@@ -6,11 +6,13 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 const { connect: connectToDB } = require('./config/db');
 
 const adminRouter = require('./app/interfaces/admin/router');
 const authRouter = require('./app/interfaces/auth/router');
 const hostRouter = require('./app/interfaces/host/router');
+const districtRouter = require('./app/interfaces/district/router');
 
 // cors
 const corsOptions = { origin: process.env.FRONT_END_ORIGIN };
@@ -34,10 +36,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ type: 'application/*+json' }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('X-HTTP-Method-Override'));
 
 app.use('/', adminRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/host', hostRouter);
+app.use('/api/district', districtRouter);
 
 // catch 404 and forward to exceptions handler
 app.use((req, res, next) => {

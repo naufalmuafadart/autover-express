@@ -33,6 +33,7 @@ const District = require('../domains/mongoose_model/District');
 // use case
 const CreateDistrictUseCase = require('../applications/use_case/CreateDistrictUseCase');
 const CreateHostUseCase = require('../applications/use_case/CreateHostUseCase');
+const EditDistrictUseCase = require('../applications/use_case/EditDistrictUseCase');
 const SignInUseCase = require('../applications/use_case/SignInUseCase');
 const SignUpUseCase = require('../applications/use_case/SignUpUseCase');
 const ViewDistrictUseCase = require('../applications/use_case/ViewDistrictUseCase');
@@ -140,6 +141,19 @@ container.register([
         {
           name: 'hostRepository',
           internal: HostRepository.name,
+        },
+      ],
+    },
+  },
+  {
+    key: EditDistrictUseCase.name,
+    Class: EditDistrictUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'districtRepository',
+          internal: DistrictRepository.name,
         },
       ],
     },
