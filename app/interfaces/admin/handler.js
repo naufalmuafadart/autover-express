@@ -1,6 +1,5 @@
 const container = require('../../infrastructures/container');
 
-const CreateDistrictUseCase = require('../../applications/use_case/CreateDistrictUseCase');
 const ViewDistrictUseCase = require('../../applications/use_case/ViewDistrictUseCase');
 const ViewEditDistrictUseCase = require('../../applications/use_case/ViewEditDistrictUseCase');
 const common_functions = require('../../commons/common_functions');
@@ -16,23 +15,8 @@ module.exports = {
       return common_functions.handlerErrorHandler(res, err);
     }
   },
-  addDistrict: (req, res) => res.render('./district/create'),
-  postDistrict: async (req, res) => {
-    try {
-      const { name } = req.body;
-
-      const createDistrictUeCase = container.getInstance(CreateDistrictUseCase.name);
-      await createDistrictUeCase.execute(name);
-
-      return res.status(201).json({
-        status: 'success',
-        message: 'success add district',
-      });
-    } catch (err) {
-      return common_functions.handlerErrorHandler(res, err);
-    }
-  },
-  editDistrict: async (req, res) => {
+  createDistrict: (req, res) => res.render('./district/create'),
+  updateDistrict: async (req, res) => {
     const { id } = req.params;
     try {
       const viewEditDistrictUseCase = container.getInstance(ViewEditDistrictUseCase.name);

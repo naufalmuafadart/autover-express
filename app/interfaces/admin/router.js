@@ -1,14 +1,13 @@
 const express = require('express');
 const {
-  index, getDistrict, addDistrict, postDistrict, editDistrict,
+  index, getDistrict, createDistrict, updateDistrict,
 } = require('./handler');
 
 const router = express.Router();
 
 router.get('/', index);
 router.get('/district', getDistrict);
-router.get('/district/add', addDistrict);
-router.post('/district', postDistrict);
-router.get('/district/edit/:id', editDistrict);
+router.get('/district/add', createDistrict);
+router.get('/district/edit/:id', updateDistrict);
 
 module.exports = router;

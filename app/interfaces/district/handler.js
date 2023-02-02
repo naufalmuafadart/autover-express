@@ -1,6 +1,7 @@
 const container = require('../../infrastructures/container');
 
 // use case
+const CreateDistrictUseCase = require('../../applications/use_case/CreateDistrictUseCase');
 const ReadDistrictsUseCase = require('../../applications/use_case/ReadDistrictsUseCase');
 const UpdateDistrictUseCase = require('../../applications/use_case/UpdateDistrictUseCase');
 
@@ -19,6 +20,21 @@ module.exports = {
       });
     } catch (e) {
       return common_functions.handlerErrorHandler(res, e);
+    }
+  },
+  postDistrict: async (req, res) => {
+    try {
+      const { name } = req.body;
+
+      const createDistrictUeCase = container.getInstance(CreateDistrictUseCase.name);
+      await createDistrictUeCase.execute(name);
+
+      return res.status(201).json({
+        status: 'success',
+        message: 'success add district',
+      });
+    } catch (err) {
+      return common_functions.handlerErrorHandler(res, err);
     }
   },
   putDistrict: async (req, res) => {
