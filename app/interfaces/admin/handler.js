@@ -6,7 +6,7 @@ const common_functions = require('../../commons/common_functions');
 
 module.exports = {
   index: (req, res) => res.render('index'),
-  getDistrict: async (req, res) => {
+  readDistrict: async (req, res) => {
     try {
       const viewDistrictUseCase = container.getInstance(ViewDistrictUseCase.name);
       const districts = await viewDistrictUseCase.execute();

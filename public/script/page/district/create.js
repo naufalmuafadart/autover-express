@@ -8,7 +8,7 @@ formAdd.onsubmit = async (e) => {
   const urlencoded = new URLSearchParams();
   urlencoded.append('name', inputName.value);
 
-  const response = await fetch('/district', {
+  const response = await fetch('/api/district', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
