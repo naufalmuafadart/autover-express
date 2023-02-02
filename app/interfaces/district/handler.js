@@ -9,10 +9,10 @@ const UpdateDistrictUseCase = require('../../applications/use_case/UpdateDistric
 const common_functions = require('../../commons/common_functions');
 
 module.exports = {
-  getDistricts: async (req, res) => {
+  readDistricts: async (req, res) => {
     try {
-      const getDistrictsUseCase = container.getInstance(ReadDistrictsUseCase.name);
-      const districts = await getDistrictsUseCase.execute();
+      const readDistrictUseCase = container.getInstance(ReadDistrictsUseCase.name);
+      const districts = await readDistrictUseCase.execute();
       return res.status(200).json({
         status: 'success',
         message: 'Success get districts',
@@ -42,8 +42,8 @@ module.exports = {
     const { name } = req.body;
 
     try {
-      const editDistrictUseCase = container.getInstance(UpdateDistrictUseCase.name);
-      await editDistrictUseCase.execute(id, name);
+      const updateDistrictUseCase = container.getInstance(UpdateDistrictUseCase.name);
+      await updateDistrictUseCase.execute(id, name);
       return res.status(200).json({
         status: 'success',
         message: 'Success edit district',

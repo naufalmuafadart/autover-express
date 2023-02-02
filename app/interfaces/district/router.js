@@ -1,10 +1,10 @@
 const express = require('express');
 
-const { getDistricts, postDistrict, putDistrict } = require('./handler');
+const { readDistricts, postDistrict, putDistrict } = require('./handler');
 
 const router = express.Router();
 
-router.get('/', getDistricts);
+router.get('/', readDistricts);
 router.post('/', postDistrict);
 router.put('/:id', putDistrict);
 

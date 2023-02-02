@@ -11,8 +11,8 @@ module.exports = {
     const { email, password } = req.body;
 
     try {
-      const signInUseCase = container.getInstance(CreateAuthUseCase.name);
-      const data = await signInUseCase.execute({ email, password });
+      const createAuthUseCase = container.getInstance(CreateAuthUseCase.name);
+      const data = await createAuthUseCase.execute({ email, password });
 
       return res.status(200).json({
         status: 'success',

@@ -8,7 +8,7 @@ const ReadCheckIsHostUseCase = require('../../applications/use_case/ReadCheckIsH
 const common_functions = require('../../commons/common_functions');
 
 module.exports = {
-  createHost: async (req, res) => {
+  postHost: async (req, res) => {
     try {
       const createHostUseCase = container.getInstance(CreateHostUseCase.name);
       await createHostUseCase.execute(req.body);
@@ -23,8 +23,8 @@ module.exports = {
   },
   getCheckIsUserAHost: async (req, res) => {
     try {
-      const getCheckIsHostPayload = container.getInstance(ReadCheckIsHostUseCase.name);
-      const isAHost = await getCheckIsHostPayload.execute(req.params);
+      const readCheckIsHostUseCase = container.getInstance(ReadCheckIsHostUseCase.name);
+      const isAHost = await readCheckIsHostUseCase.execute(req.params);
 
       return res.status(201).json({
         status: 'success',
