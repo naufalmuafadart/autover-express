@@ -5,6 +5,10 @@ class DistrictRepository {
     throw Error('DISTRICT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }
 
+  async validateIdExist() {
+    throw Error('DISTRICT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+  }
+
   async getDistricts() {
     throw Error('DISTRICT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }

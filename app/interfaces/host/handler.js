@@ -9,11 +9,9 @@ const common_functions = require('../../commons/common_functions');
 
 module.exports = {
   createHost: async (req, res) => {
-    const { user_id, district } = req.body;
-
     try {
       const createHostUseCase = container.getInstance(CreateHostUseCase.name);
-      await createHostUseCase.execute({ user_id, district });
+      await createHostUseCase.execute(req.body);
 
       return res.status(201).json({
         status: 'success',

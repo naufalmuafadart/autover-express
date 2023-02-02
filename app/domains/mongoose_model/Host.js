@@ -7,8 +7,8 @@ const hostSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     require: [true, 'user id does not exist'],
   },
-  district: {
-    type: String,
+  district_id: {
+    type: mongoose.Schema.Types.ObjectId,
     require: [true, 'district does not not exist'],
   },
 }, { timestamps: true });

@@ -1,4 +1,5 @@
 const DistrictRepository = require('../../domains/district/DistrictRepository');
+const InvariantError = require('../../commons/exceptions/InvariantError');
 
 class DistrictRepositoryMongo extends DistrictRepository {
   constructor(District) {
@@ -9,6 +10,11 @@ class DistrictRepositoryMongo extends DistrictRepository {
   async addDistrict(name) {
     const district = await new this._District({ name });
     await district.save();
+  }
+
+  async validateIdExist(id) {
+    const district = await this._District.findById(id);
+    if (district === null) throw new InvariantError('District id not found');
   }
 
   async getDistricts() {

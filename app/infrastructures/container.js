@@ -161,6 +161,10 @@ container.register([
           internal: UserRepository.name,
         },
         {
+          name: 'districtRepository',
+          internal: DistrictRepository.name,
+        },
+        {
           name: 'mongooseValidator',
           internal: MongooseValidator.name,
         },
