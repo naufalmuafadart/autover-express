@@ -168,6 +168,10 @@ container.register([
           name: 'mongooseValidator',
           internal: MongooseValidator.name,
         },
+        {
+          name: 'hostValidator',
+          internal: HostValidator.name,
+        },
       ],
     },
   },

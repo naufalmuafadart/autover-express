@@ -3,16 +3,19 @@ class CreateHostUseCase {
     hostRepository,
     userRepository,
     districtRepository,
+    hostValidator,
     mongooseValidator,
   }) {
     this._hostRepository = hostRepository;
     this._userRepository = userRepository;
     this._districtRepository = districtRepository;
+    this._hostValidator = hostValidator;
     this._mongooseValidator = mongooseValidator;
   }
 
   async execute(payload) {
     try {
+      await this._hostValidator.validateCreateHostPayload(payload);
       const { user_id, district_id } = payload;
 
       // validate id
