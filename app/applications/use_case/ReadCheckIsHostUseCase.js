@@ -7,7 +7,7 @@ class ReadCheckIsHostUseCase {
 
   async execute(params) {
     try {
-      await this._hostValidator.validateCheckIsHostParams(params);
+      await this._hostValidator.validateReadCheckIsHostParams(params);
       this._mongooseValidator.validateId(params.id);
       return this._hostRepository.checkIsUserAHost(params.id);
     } catch (e) {

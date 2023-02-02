@@ -5,8 +5,8 @@ const createHostPayloadSchema = Joi.object({
   district_id: Joi.string().required(),
 });
 
-const getCheckIsHostParamsSchema = Joi.object({
+const readCheckIsHostParamsSchema = Joi.object({
   id: Joi.string().required(),
 });
 
-module.exports = { createHostPayloadSchema, getCheckIsHostParamsSchema };
+module.exports = { createHostPayloadSchema, readCheckIsHostParamsSchema };

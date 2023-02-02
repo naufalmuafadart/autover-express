@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 class HostValidator {
-  async validateGetCheckIsHostParams(params) {
+  async validateReadCheckIsHostParams(params) {
     throw Error('HOST_VALIDATOR.METHOD_NOT_IMPLEMENTED');
   }
 }
