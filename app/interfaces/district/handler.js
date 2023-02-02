@@ -19,15 +19,14 @@ module.exports = {
         data: districts,
       });
     } catch (e) {
+      console.log(e.message);
       return common_functions.handlerErrorHandler(res, e);
     }
   },
   postDistrict: async (req, res) => {
     try {
-      const { name } = req.body;
-
       const createDistrictUeCase = container.getInstance(CreateDistrictUseCase.name);
-      await createDistrictUeCase.execute(name);
+      await createDistrictUeCase.execute(req.body);
 
       return res.status(201).json({
         status: 'success',

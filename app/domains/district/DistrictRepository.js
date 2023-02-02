@@ -20,6 +20,10 @@ class DistrictRepository {
   async editDistrict(id, name) {
     throw Error('DISTRICT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }
+
+  async validateNameDoesNotExist(name) {
+    throw Error('DISTRICT_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+  }
 }
 
 module.exports = DistrictRepository;

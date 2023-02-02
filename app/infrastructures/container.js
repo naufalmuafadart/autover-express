@@ -44,11 +44,13 @@ const ReadCheckIsHostUseCase = require('../applications/use_case/ReadCheckIsHost
 // validator
 const AuthValidator = require('../applications/validator/AuthValidator');
 const HostValidator = require('../applications/validator/HostValidator');
+const DistrictValidator = require('../applications/validator/DistrictValidator');
 const MongooseValidator = require('../applications/validator/MongooseValidator');
 
 // validator infrastructure
 const AuthValidatorJoi = require('./validator/auth/AuthValidatorJoi');
 const HostValidatorJoi = require('./validator/host/HostValidatorJoi');
+const DistrictValidatorJoi = require('./validator/district/DistrictValidatorJoi');
 const MongooseValidatorMongoose = require('./validator/mongoose/MongooseValidatorMongoose');
 
 const container = createContainer();
@@ -126,6 +128,10 @@ container.register([
     Class: HostValidatorJoi,
   },
   {
+    key: DistrictValidator.name,
+    Class: DistrictValidatorJoi,
+  },
+  {
     key: MongooseValidator.name,
     Class: MongooseValidatorMongoose,
   },
@@ -142,6 +148,10 @@ container.register([
         {
           name: 'districtRepository',
           internal: DistrictRepository.name,
+        },
+        {
+          name: 'districtValidator',
+          internal: DistrictValidator.name,
         },
       ],
     },

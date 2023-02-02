@@ -36,6 +36,11 @@ class DistrictRepositoryMongo extends DistrictRepository {
       throw e;
     }
   }
+
+  async validateNameDoesNotExist(name) {
+    const district = await this._District.findOne({ name });
+    if (district != null) throw new InvariantError('Name is exist');
+  }
 }
 
 module.exports = DistrictRepositoryMongo;
