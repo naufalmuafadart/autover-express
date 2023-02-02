@@ -6,7 +6,7 @@ const createHostPayloadSchema = Joi.object({
 });
 
 const getCheckIsHostParamsSchema = Joi.object({
-  id: Joi.string().min(24).max(24).required(),
+  id: Joi.string().required(),
 });
 
 module.exports = { createHostPayloadSchema, getCheckIsHostParamsSchema };
