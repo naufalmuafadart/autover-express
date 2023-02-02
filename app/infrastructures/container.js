@@ -49,7 +49,7 @@ const MongooseValidator = require('../applications/validator/MongooseValidator')
 // validator infrastructure
 const AuthValidatorJoi = require('./validator/auth/AuthValidatorJoi');
 const HostValidatorJoi = require('./validator/host/HostValidatorJoi');
-const MongooseValidatorMogoose = require('./validator/mongoose/MongooseValidatorMogoose');
+const MongooseValidatorMongoose = require('./validator/mongoose/MongooseValidatorMongoose');
 
 const container = createContainer();
 
@@ -127,7 +127,7 @@ container.register([
   },
   {
     key: MongooseValidator.name,
-    Class: MongooseValidatorMogoose,
+    Class: MongooseValidatorMongoose,
   },
 ]);
 
