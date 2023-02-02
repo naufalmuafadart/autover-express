@@ -1,4 +1,4 @@
-class GetCheckIsHostUseCase {
+class ReadCheckIsHostUseCase {
   constructor({ hostRepository, hostValidator, mongooseValidator }) {
     this._hostValidator = hostValidator;
     this._hostRepository = hostRepository;
@@ -16,4 +16,4 @@ class GetCheckIsHostUseCase {
   }
 }
 
-module.exports = GetCheckIsHostUseCase;
+module.exports = ReadCheckIsHostUseCase;

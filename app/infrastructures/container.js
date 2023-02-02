@@ -39,7 +39,7 @@ const CreateAuthUseCase = require('../applications/use_case/CreateAuthUseCase');
 const CreateUserUseCase = require('../applications/use_case/CreateUserUseCase');
 const ViewDistrictUseCase = require('../applications/use_case/ViewDistrictUseCase');
 const ViewEditDistrictUseCase = require('../applications/use_case/ViewEditDistrictUseCase');
-const GetCheckIsHostPayload = require('../applications/use_case/GetCheckIsHostUseCase');
+const ReadCheckIsHostUseCase = require('../applications/use_case/ReadCheckIsHostUseCase');
 
 // validator
 const AuthValidator = require('../applications/validator/AuthValidator');
@@ -189,8 +189,8 @@ container.register([
     },
   },
   {
-    key: GetCheckIsHostPayload.name,
-    Class: GetCheckIsHostPayload,
+    key: ReadCheckIsHostUseCase.name,
+    Class: ReadCheckIsHostUseCase,
     parameter: {
       injectType: 'destructuring',
       dependencies: [

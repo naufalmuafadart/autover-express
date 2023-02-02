@@ -2,9 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 
-const { createHost, checkIsUserAHost } = require('./handler');
+const { createHost, getCheckIsUserAHost } = require('./handler');
 
 router.post('/', createHost);
-router.get('/check/:id', checkIsUserAHost);
+router.get('/check/:id', getCheckIsUserAHost);
 
 module.exports = router;

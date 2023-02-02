@@ -2,7 +2,7 @@ const container = require('../../infrastructures/container');
 
 // use case
 const CreateHostUseCase = require('../../applications/use_case/CreateHostUseCase');
-const GetCheckIsHostPayload = require('../../applications/use_case/GetCheckIsHostUseCase');
+const ReadCheckIsHostUseCase = require('../../applications/use_case/ReadCheckIsHostUseCase');
 
 // tools
 const common_functions = require('../../commons/common_functions');
@@ -21,9 +21,9 @@ module.exports = {
       return common_functions.handlerErrorHandler(res, err);
     }
   },
-  checkIsUserAHost: async (req, res) => {
+  getCheckIsUserAHost: async (req, res) => {
     try {
-      const getCheckIsHostPayload = container.getInstance(GetCheckIsHostPayload.name);
+      const getCheckIsHostPayload = container.getInstance(ReadCheckIsHostUseCase.name);
       const isAHost = await getCheckIsHostPayload.execute(req.params);
 
       return res.status(201).json({
