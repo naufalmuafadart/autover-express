@@ -36,12 +36,9 @@ module.exports = {
     }
   },
   putDistrict: async (req, res) => {
-    const { id } = req.params;
-    const { name } = req.body;
-
     try {
       const updateDistrictUseCase = container.getInstance(UpdateDistrictUseCase.name);
-      await updateDistrictUseCase.execute(id, name);
+      await updateDistrictUseCase.execute(req.params, req.body);
       return res.status(200).json({
         status: 'success',
         message: 'Success edit district',

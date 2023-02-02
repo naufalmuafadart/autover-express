@@ -201,6 +201,10 @@ container.register([
           name: 'districtRepository',
           internal: DistrictRepository.name,
         },
+        {
+          name: 'districtValidator',
+          internal: DistrictValidator.name,
+        },
       ],
     },
   },
