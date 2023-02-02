@@ -2,7 +2,7 @@ const container = require('../../infrastructures/container');
 
 // use case
 const GetDistrictsUseCase = require('../../applications/use_case/GetDistrictsUseCase');
-const EditDistrictUseCase = require('../../applications/use_case/EditDistrictUseCase');
+const UpdateDistrictUseCase = require('../../applications/use_case/UpdateDistrictUseCase');
 
 // tools
 const common_functions = require('../../commons/common_functions');
@@ -26,7 +26,7 @@ module.exports = {
     const { name } = req.body;
 
     try {
-      const editDistrictUseCase = container.getInstance(EditDistrictUseCase.name);
+      const editDistrictUseCase = container.getInstance(UpdateDistrictUseCase.name);
       await editDistrictUseCase.execute(id, name);
       return res.status(200).json({
         status: 'success',

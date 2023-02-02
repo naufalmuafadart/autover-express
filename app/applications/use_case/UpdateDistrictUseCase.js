@@ -1,4 +1,4 @@
-class EditDistrictUseCase {
+class UpdateDistrictUseCase {
   constructor({ districtRepository }) {
     this._districtRepository = districtRepository;
   }
@@ -12,4 +12,4 @@ class EditDistrictUseCase {
   }
 }
 
-module.exports = EditDistrictUseCase;
+module.exports = UpdateDistrictUseCase;
