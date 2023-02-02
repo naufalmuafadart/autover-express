@@ -156,6 +156,14 @@ container.register([
           name: 'hostRepository',
           internal: HostRepository.name,
         },
+        {
+          name: 'userRepository',
+          internal: UserRepository.name,
+        },
+        {
+          name: 'mongooseValidator',
+          internal: MongooseValidator.name,
+        },
       ],
     },
   },

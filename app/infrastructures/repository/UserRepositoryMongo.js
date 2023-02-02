@@ -18,6 +18,11 @@ class UserRepositoryMongo extends UserRepository {
     return user;
   }
 
+  async validateIdExist(id) {
+    const user = await this._User.findById(id);
+    if (user === null) throw new InvariantError('user Id not found');
+  }
+
   async validateEmailExist(email) {
     const check = await this._User.findOne({ email });
     if (check === null) throw new InvariantError('Email not registered');

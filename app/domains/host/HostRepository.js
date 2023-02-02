@@ -8,6 +8,10 @@ class HostRepository {
   async checkIsUserAHost(id) {
     throw Error('HOST_REPOSITORY.METHOD_NOT_IMPLEMENTED');
   }
+
+  async validateUserIsNotAHost(id) {
+    throw Error('HOST_REPOSITORY.METHOD_NOT_IMPLEMENTED');
+  }
 }
 
 module.exports = HostRepository;

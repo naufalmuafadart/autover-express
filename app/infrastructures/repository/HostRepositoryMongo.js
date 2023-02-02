@@ -1,4 +1,5 @@
 const HostRepository = require('../../domains/host/HostRepository');
+const InvariantError = require('../../commons/exceptions/InvariantError');
 
 class HostRepositoryMongo extends HostRepository {
   constructor(Host) {
@@ -18,6 +19,11 @@ class HostRepositoryMongo extends HostRepository {
     } catch (e) {
       throw e;
     }
+  }
+
+  async validateUserIsNotAHost(id) {
+    const hostCount = await this._Host.find({ user_id: id }).count();
+    if (hostCount === 1) throw new InvariantError('User already be a host');
   }
 }
 
