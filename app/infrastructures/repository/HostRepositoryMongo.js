@@ -10,6 +10,15 @@ class HostRepositoryMongo extends HostRepository {
     const host = await new this._Host(payload);
     await host.save();
   }
+
+  async checkIsUserAHost(id) {
+    try {
+      const hostCount = await this._Host.find({ _id: id }).count();
+      return Promise.resolve(hostCount > 1);
+    } catch (e) {
+      throw e;
+    }
+  }
 }
 
 module.exports = HostRepositoryMongo;
