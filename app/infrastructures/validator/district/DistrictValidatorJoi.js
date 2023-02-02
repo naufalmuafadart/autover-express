@@ -4,6 +4,7 @@ const {
   createDistrictPayloadSchema,
   updateDistrictParamsSchema,
   updateDistrictPayloadSchema,
+  viewEditDistrictParamsSchema,
 } = require('./schema');
 
 class DistrictValidatorJoi extends DistrictValidator {
@@ -26,6 +27,14 @@ class DistrictValidatorJoi extends DistrictValidator {
   async validateUpdateDistrictPayload(payload) {
     try {
       await updateDistrictPayloadSchema.validateAsync(payload);
+    } catch (e) {
+      throw new InvariantError(e.message);
+    }
+  }
+
+  async validateViewEditDistrictParams(params) {
+    try {
+      await viewEditDistrictParamsSchema.validateAsync(params);
     } catch (e) {
       throw new InvariantError(e.message);
     }

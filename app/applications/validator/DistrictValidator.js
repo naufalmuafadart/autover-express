@@ -12,6 +12,10 @@ class DistrictValidator {
   async validateUpdateDistrictPayload(payload) {
     throw Error('DISTRICT_VALIDATOR.METHOD_NOT_IMPLEMENTED');
   }
+
+  async validateViewEditDistrictParams(params) {
+    throw Error('DISTRICT_VALIDATOR.METHOD_NOT_IMPLEMENTED');
+  }
 }
 
 module.exports = DistrictValidator;

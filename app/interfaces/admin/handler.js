@@ -17,10 +17,9 @@ module.exports = {
   },
   createDistrict: (req, res) => res.render('./district/create'),
   updateDistrict: async (req, res) => {
-    const { id } = req.params;
     try {
       const viewEditDistrictUseCase = container.getInstance(ViewEditDistrictUseCase.name);
-      const district = await viewEditDistrictUseCase.execute(id);
+      const district = await viewEditDistrictUseCase.execute(req.params);
       return res.render('./district/edit', { district });
     } catch (err) {
       return common_functions.handlerErrorHandler(res, err);
