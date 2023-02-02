@@ -35,7 +35,7 @@ const CreateDistrictUseCase = require('../applications/use_case/CreateDistrictUs
 const CreateHostUseCase = require('../applications/use_case/CreateHostUseCase');
 const EditDistrictUseCase = require('../applications/use_case/EditDistrictUseCase');
 const GetDistrictsUseCase = require('../applications/use_case/GetDistrictsUseCase');
-const SignInUseCase = require('../applications/use_case/SignInUseCase');
+const CreateAuthUseCase = require('../applications/use_case/CreateAuthUseCase');
 const CreateUserUseCase = require('../applications/use_case/CreateUserUseCase');
 const ViewDistrictUseCase = require('../applications/use_case/ViewDistrictUseCase');
 const ViewEditDistrictUseCase = require('../applications/use_case/ViewEditDistrictUseCase');
@@ -223,8 +223,8 @@ container.register([
     },
   },
   {
-    key: SignInUseCase.name,
-    Class: SignInUseCase,
+    key: CreateAuthUseCase.name,
+    Class: CreateAuthUseCase,
     parameter: {
       injectType: 'destructuring',
       dependencies: [

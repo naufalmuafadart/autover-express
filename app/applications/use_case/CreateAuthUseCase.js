@@ -1,4 +1,4 @@
-class SignInUseCase {
+class CreateAuthUseCase {
   constructor({
     authValidator,
     userRepository,
@@ -36,4 +36,4 @@ class SignInUseCase {
   }
 }
 
-module.exports = SignInUseCase;
+module.exports = CreateAuthUseCase;
