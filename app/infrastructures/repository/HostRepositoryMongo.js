@@ -13,8 +13,8 @@ class HostRepositoryMongo extends HostRepository {
 
   async checkIsUserAHost(id) {
     try {
-      const hostCount = await this._Host.find({ _id: id }).count();
-      return Promise.resolve(hostCount > 1);
+      const hostCount = await this._Host.find({ user_id: id }).count();
+      return Promise.resolve(hostCount === 1);
     } catch (e) {
       throw e;
     }

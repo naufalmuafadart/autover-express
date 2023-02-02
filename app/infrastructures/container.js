@@ -39,12 +39,17 @@ const SignInUseCase = require('../applications/use_case/SignInUseCase');
 const SignUpUseCase = require('../applications/use_case/SignUpUseCase');
 const ViewDistrictUseCase = require('../applications/use_case/ViewDistrictUseCase');
 const ViewEditDistrictUseCase = require('../applications/use_case/ViewEditDistrictUseCase');
+const GetCheckIsHostPayload = require('../applications/use_case/GetCheckIsHostUseCase');
 
 // validator
 const AuthValidator = require('../applications/validator/AuthValidator');
+const HostValidator = require('../applications/validator/HostValidator');
+const MongooseValidator = require('../applications/validator/MongooseValidator');
 
 // validator infrastructure
 const AuthValidatorJoi = require('./validator/auth/AuthValidatorJoi');
+const HostValidatorJoi = require('./validator/host/HostValidatorJoi');
+const MongooseValidatorMogoose = require('./validator/mongoose/MongooseValidatorMogoose');
 
 const container = createContainer();
 
@@ -116,6 +121,14 @@ container.register([
     key: AuthValidator.name,
     Class: AuthValidatorJoi,
   },
+  {
+    key: HostValidator.name,
+    Class: HostValidatorJoi,
+  },
+  {
+    key: MongooseValidator.name,
+    Class: MongooseValidatorMogoose,
+  },
 ]);
 
 // registering use case
@@ -147,8 +160,8 @@ container.register([
     },
   },
   {
-    key: GetDistrictsUseCase.name,
-    Class: GetDistrictsUseCase,
+    key: EditDistrictUseCase.name,
+    Class: EditDistrictUseCase,
     parameter: {
       injectType: 'destructuring',
       dependencies: [
@@ -160,8 +173,29 @@ container.register([
     },
   },
   {
-    key: EditDistrictUseCase.name,
-    Class: EditDistrictUseCase,
+    key: GetCheckIsHostPayload.name,
+    Class: GetCheckIsHostPayload,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'hostRepository',
+          internal: HostRepository.name,
+        },
+        {
+          name: 'hostValidator',
+          internal: HostValidator.name,
+        },
+        {
+          name: 'mongooseValidator',
+          internal: MongooseValidator.name,
+        },
+      ],
+    },
+  },
+  {
+    key: GetDistrictsUseCase.name,
+    Class: GetDistrictsUseCase,
     parameter: {
       injectType: 'destructuring',
       dependencies: [
