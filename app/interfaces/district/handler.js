@@ -1,7 +1,7 @@
 const container = require('../../infrastructures/container');
 
 // use case
-const GetDistrictsUseCase = require('../../applications/use_case/GetDistrictsUseCase');
+const ReadDistrictsUseCase = require('../../applications/use_case/ReadDistrictsUseCase');
 const UpdateDistrictUseCase = require('../../applications/use_case/UpdateDistrictUseCase');
 
 // tools
@@ -10,7 +10,7 @@ const common_functions = require('../../commons/common_functions');
 module.exports = {
   getDistricts: async (req, res) => {
     try {
-      const getDistrictsUseCase = container.getInstance(GetDistrictsUseCase.name);
+      const getDistrictsUseCase = container.getInstance(ReadDistrictsUseCase.name);
       const districts = await getDistrictsUseCase.execute();
       return res.status(200).json({
         status: 'success',

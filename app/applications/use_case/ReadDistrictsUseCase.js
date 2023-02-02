@@ -1,4 +1,4 @@
-class GetDistrictsUseCase {
+class ReadDistrictsUseCase {
   constructor({ districtRepository }) {
     this._districtRepository = districtRepository;
   }
@@ -12,4 +12,4 @@ class GetDistrictsUseCase {
   }
 }
 
-module.exports = GetDistrictsUseCase;
+module.exports = ReadDistrictsUseCase;

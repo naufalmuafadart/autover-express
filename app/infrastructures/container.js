@@ -34,7 +34,7 @@ const District = require('../domains/mongoose_model/District');
 const CreateDistrictUseCase = require('../applications/use_case/CreateDistrictUseCase');
 const CreateHostUseCase = require('../applications/use_case/CreateHostUseCase');
 const UpdateDistrictUseCase = require('../applications/use_case/UpdateDistrictUseCase');
-const GetDistrictsUseCase = require('../applications/use_case/GetDistrictsUseCase');
+const ReadDistrictsUseCase = require('../applications/use_case/ReadDistrictsUseCase');
 const CreateAuthUseCase = require('../applications/use_case/CreateAuthUseCase');
 const CreateUserUseCase = require('../applications/use_case/CreateUserUseCase');
 const ViewDistrictUseCase = require('../applications/use_case/ViewDistrictUseCase');
@@ -210,8 +210,8 @@ container.register([
     },
   },
   {
-    key: GetDistrictsUseCase.name,
-    Class: GetDistrictsUseCase,
+    key: ReadDistrictsUseCase.name,
+    Class: ReadDistrictsUseCase,
     parameter: {
       injectType: 'destructuring',
       dependencies: [
