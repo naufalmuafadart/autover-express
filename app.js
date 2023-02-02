@@ -10,6 +10,7 @@ const methodOverride = require('method-override');
 const { connect: connectToDB } = require('./config/db');
 
 const adminRouter = require('./app/interfaces/admin/router');
+const userRouter = require('./app/interfaces/user/router');
 const authRouter = require('./app/interfaces/auth/router');
 const hostRouter = require('./app/interfaces/host/router');
 const districtRouter = require('./app/interfaces/district/router');
@@ -39,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('X-HTTP-Method-Override'));
 
 app.use('/', adminRouter);
+app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/host', hostRouter);
 app.use('/api/district', districtRouter);
