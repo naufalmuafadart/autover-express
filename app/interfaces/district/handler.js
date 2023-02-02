@@ -19,7 +19,6 @@ module.exports = {
         data: districts,
       });
     } catch (e) {
-      console.log(e.message);
       return common_functions.handlerErrorHandler(res, e);
     }
   },

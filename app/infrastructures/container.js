@@ -45,12 +45,14 @@ const ReadCheckIsHostUseCase = require('../applications/use_case/ReadCheckIsHost
 const AuthValidator = require('../applications/validator/AuthValidator');
 const HostValidator = require('../applications/validator/HostValidator');
 const DistrictValidator = require('../applications/validator/DistrictValidator');
+const UserValidator = require('../applications/validator/UserValidator');
 const MongooseValidator = require('../applications/validator/MongooseValidator');
 
 // validator infrastructure
 const AuthValidatorJoi = require('./validator/auth/AuthValidatorJoi');
 const HostValidatorJoi = require('./validator/host/HostValidatorJoi');
 const DistrictValidatorJoi = require('./validator/district/DistrictValidatorJoi');
+const UserValidatorJoi = require('./validator/user/UserValidatorJoi');
 const MongooseValidatorMongoose = require('./validator/mongoose/MongooseValidatorMongoose');
 
 const container = createContainer();
@@ -130,6 +132,10 @@ container.register([
   {
     key: DistrictValidator.name,
     Class: DistrictValidatorJoi,
+  },
+  {
+    key: UserValidator.name,
+    Class: UserValidatorJoi,
   },
   {
     key: MongooseValidator.name,
@@ -272,12 +278,12 @@ container.register([
       injectType: 'destructuring',
       dependencies: [
         {
-          name: 'authValidator',
-          internal: AuthValidator.name,
-        },
-        {
           name: 'userRepository',
           internal: UserRepository.name,
+        },
+        {
+          name: 'userValidator',
+          internal: UserValidator.name,
         },
         {
           name: 'passwordHash',

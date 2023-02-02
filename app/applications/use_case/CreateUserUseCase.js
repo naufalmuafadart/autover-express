@@ -1,24 +1,20 @@
 class CreateUserUseCase {
-  constructor({ authValidator, userRepository, passwordHash }) {
-    this._authValidator = authValidator;
+  constructor({ userRepository, userValidator, passwordHash }) {
     this._userRepository = userRepository;
+    this._userValidator = userValidator;
     this._passwordHash = passwordHash;
   }
 
   async execute(payload) {
     try {
+      await this._userValidator.validateCreateUserPayload(payload);
       const {
-        full_name, phone_number, email, password,
+        phone_number, email, password,
       } = payload;
-      await this._authValidator.validateSignUpPayload({
-        full_name, phone_number, email, password,
-      });
       await this._userRepository.validateEmailDoesNotExist(email);
       await this._userRepository.validatePhoneNumberDoesNotExist(phone_number);
       const hashedPassword = await this._passwordHash.hashString(password);
-      await this._userRepository.addUser({
-        full_name, phone_number, email, password: hashedPassword,
-      });
+      await this._userRepository.addUser({ ...payload, password: hashedPassword });
     } catch (err) {
       throw err;
     }
