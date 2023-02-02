@@ -7,9 +7,9 @@ const signUpPayloadSchema = Joi.object({
   password: Joi.string().min(8).required(),
 });
 
-const signInPayloadSchema = Joi.object({
+const createAuthPayloadSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().min(8).required(),
 });
 
-module.exports = { signUpPayloadSchema, signInPayloadSchema };
+module.exports = { signUpPayloadSchema, createAuthPayloadSchema };

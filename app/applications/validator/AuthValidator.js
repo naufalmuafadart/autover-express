@@ -5,7 +5,7 @@ class AuthValidator {
     throw Error('AUTH_VALIDATOR.METHOD_NOT_IMPLEMENTED');
   }
 
-  async validateSignInPayload(payload) {
+  async validateCreateAuthPayload(payload) {
     throw Error('AUTH_VALIDATOR.METHOD_NOT_IMPLEMENTED');
   }
 }

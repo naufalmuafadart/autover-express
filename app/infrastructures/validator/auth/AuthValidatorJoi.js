@@ -1,4 +1,4 @@
-const { signUpPayloadSchema, signInPayloadSchema } = require('./schema');
+const { signUpPayloadSchema, createAuthPayloadSchema } = require('./schema');
 const InvariantError = require('../../../commons/exceptions/InvariantError');
 const AuthValidator = require('../../../applications/validator/AuthValidator');
 
@@ -11,9 +11,9 @@ class AuthValidatorJoi extends AuthValidator {
     }
   }
 
-  async validateSignInPayload(payload) {
+  async validateCreateAuthPayload(payload) {
     try {
-      await signInPayloadSchema.validateAsync(payload);
+      await createAuthPayloadSchema.validateAsync(payload);
     } catch (error) {
       throw new InvariantError(error.message);
     }

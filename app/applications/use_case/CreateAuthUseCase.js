@@ -17,8 +17,8 @@ class CreateAuthUseCase {
 
   async execute(payload) {
     try {
+      await this._authValidator.validateCreateAuthPayload(payload);
       const { email, password } = payload;
-      await this._authValidator.validateSignInPayload({ email, password });
       await this._userRepository.validateEmailExist(email);
       const user = await this._userRepository.getUserByEmail(email);
       this._passwordHash.validatePassword(password, user.password);
