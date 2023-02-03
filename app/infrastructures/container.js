@@ -219,12 +219,12 @@ container.register([
           internal: HostRepository.name,
         },
         {
-          name: 'hostValidator',
-          internal: HostValidator.name,
-        },
-        {
           name: 'mongooseValidator',
           internal: MongooseValidator.name,
+        },
+        {
+          name: 'authenticationTokenManager',
+          internal: AuthenticationTokenManager.name,
         },
       ],
     },

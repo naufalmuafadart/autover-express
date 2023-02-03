@@ -1,15 +1,20 @@
 class ReadCheckIsHostUseCase {
-  constructor({ hostRepository, hostValidator, mongooseValidator }) {
-    this._hostValidator = hostValidator;
+  constructor({
+    hostRepository, mongooseValidator, authenticationTokenManager,
+  }) {
     this._hostRepository = hostRepository;
     this._mongooseValidator = mongooseValidator;
+    this._authenticationTokenManager = authenticationTokenManager;
   }
 
-  async execute(params) {
+  async execute(AuthorizationHeader) {
     try {
-      await this._hostValidator.validateReadCheckIsHostParams(params);
-      this._mongooseValidator.validateId(params.id);
-      return this._hostRepository.checkIsUserAHost(params.id);
+      const token = this._authenticationTokenManager
+        .getTokenFromAuthorizationHeader(AuthorizationHeader);
+      const jwtPayload = await this._authenticationTokenManager.verifyAccessToken(token);
+      const { id } = jwtPayload;
+      this._mongooseValidator.validateId(id);
+      return this._hostRepository.checkIsUserAHost(id);
     } catch (e) {
       throw e;
     }

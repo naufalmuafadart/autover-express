@@ -23,8 +23,9 @@ module.exports = {
   },
   getCheckIsUserAHost: async (req, res) => {
     try {
+      const AuthorizationHeader = req.get('Authorization');
       const readCheckIsHostUseCase = container.getInstance(ReadCheckIsHostUseCase.name);
-      const isAHost = await readCheckIsHostUseCase.execute(req.params);
+      const isAHost = await readCheckIsHostUseCase.execute(AuthorizationHeader);
 
       return res.status(201).json({
         status: 'success',
