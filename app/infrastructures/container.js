@@ -5,10 +5,10 @@ const bcrypt = require('bcrypt');
 const JWT = require('jsonwebtoken');
 
 // repository
-const AuthRepository = require('../domains/auth/AuthRepository');
-const HostRepository = require('../domains/host/HostRepository');
-const UserRepository = require('../domains/user/UserRepository');
-const DistrictRepository = require('../domains/district/DistrictRepository');
+const AuthRepository = require('../domains/repository/auth/AuthRepository');
+const HostRepository = require('../domains/repository/host/HostRepository');
+const UserRepository = require('../domains/repository/user/UserRepository');
+const DistrictRepository = require('../domains/repository/district/DistrictRepository');
 
 // service
 const PasswordHash = require('../applications/security/PasswordHash');

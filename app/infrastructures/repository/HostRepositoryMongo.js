@@ -1,4 +1,4 @@
-const HostRepository = require('../../domains/host/HostRepository');
+const HostRepository = require('../../domains/repository/host/HostRepository');
 const InvariantError = require('../../commons/exceptions/InvariantError');
 
 class HostRepositoryMongo extends HostRepository {

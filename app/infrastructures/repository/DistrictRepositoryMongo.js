@@ -1,4 +1,4 @@
-const DistrictRepository = require('../../domains/district/DistrictRepository');
+const DistrictRepository = require('../../domains/repository/district/DistrictRepository');
 const InvariantError = require('../../commons/exceptions/InvariantError');
 
 class DistrictRepositoryMongo extends DistrictRepository {

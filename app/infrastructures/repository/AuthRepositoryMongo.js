@@ -1,4 +1,4 @@
-const AuthRepository = require('../../domains/auth/AuthRepository');
+const AuthRepository = require('../../domains/repository/auth/AuthRepository');
 
 class AuthRepositoryMongo extends AuthRepository {
   constructor(Auth) {

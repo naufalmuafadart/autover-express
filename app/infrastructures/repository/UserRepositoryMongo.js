@@ -1,4 +1,4 @@
-const UserRepository = require('../../domains/user/UserRepository');
+const UserRepository = require('../../domains/repository/user/UserRepository');
 const InvariantError = require('../../commons/exceptions/InvariantError');
 
 class UserRepositoryMongo extends UserRepository {
