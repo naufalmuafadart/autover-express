@@ -10,14 +10,16 @@ const common_functions = require('../../commons/common_functions');
 module.exports = {
   postHost: async (req, res) => {
     try {
+      const AuthorizationHeader = req.get('Authorization');
       const createHostUseCase = container.getInstance(CreateHostUseCase.name);
-      await createHostUseCase.execute(req.body);
+      await createHostUseCase.execute(req.body, AuthorizationHeader);
 
       return res.status(201).json({
         status: 'success',
         message: 'Success register host',
       });
     } catch (err) {
+      console.log(err);
       return common_functions.handlerErrorHandler(res, err);
     }
   },

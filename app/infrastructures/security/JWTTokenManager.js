@@ -1,5 +1,6 @@
 require('dotenv').config();
 const AuthenticationTokenManager = require('../../applications/security/AuthenticationTokenManager');
+const AuthorizationError = require('../../commons/exceptions/AuthorizationError');
 
 class JWTTokenManager extends AuthenticationTokenManager {
   constructor(JWT) {
@@ -19,8 +20,15 @@ class JWTTokenManager extends AuthenticationTokenManager {
     return this._JWT.sign(payload, key, { expiresIn: age });
   }
 
+  verifyStringNotUndefined(token) {
+    if (typeof token === 'undefined' || token === null) {
+      throw new AuthorizationError('Token is required');
+    }
+  }
+
   async verifyAccessToken(token) {
     try {
+      this.verifyStringNotUndefined(token);
       const key = process.env.ACCESS_TOKEN_KEY;
       return this._JWT.verify(token, key);
     } catch (e) {
@@ -29,7 +37,12 @@ class JWTTokenManager extends AuthenticationTokenManager {
   }
 
   getTokenFromAuthorizationHeader(AuthorizationHeader) {
-    return AuthorizationHeader.substring(7, AuthorizationHeader.length);
+    try {
+      this.verifyStringNotUndefined(AuthorizationHeader);
+      return AuthorizationHeader.substring(7, AuthorizationHeader.length);
+    } catch (e) {
+      throw e;
+    }
   }
 }
 

@@ -5,18 +5,26 @@ class CreateHostUseCase {
     districtRepository,
     hostValidator,
     mongooseValidator,
+    authenticationTokenManager,
   }) {
     this._hostRepository = hostRepository;
     this._userRepository = userRepository;
     this._districtRepository = districtRepository;
     this._hostValidator = hostValidator;
     this._mongooseValidator = mongooseValidator;
+    this._authenticationTokenManager = authenticationTokenManager;
   }
 
-  async execute(payload) {
+  async execute(payload, AuthorizationHeader) {
     try {
       await this._hostValidator.validateCreateHostPayload(payload);
-      const { user_id, district_id } = payload;
+      const { district_id } = payload;
+
+      // get user id
+      const token = this._authenticationTokenManager
+        .getTokenFromAuthorizationHeader(AuthorizationHeader);
+      const jwtPayload = await this._authenticationTokenManager.verifyAccessToken(token);
+      const { id: user_id } = jwtPayload;
 
       // validate id
       this._mongooseValidator.validateId(user_id);

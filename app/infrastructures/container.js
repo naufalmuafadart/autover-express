@@ -188,6 +188,10 @@ container.register([
           name: 'hostValidator',
           internal: HostValidator.name,
         },
+        {
+          name: 'authenticationTokenManager',
+          internal: AuthenticationTokenManager.name,
+        },
       ],
     },
   },
