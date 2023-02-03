@@ -3,14 +3,12 @@ class CreateAuthUseCase {
     authValidator,
     userRepository,
     authRepository,
-    hostRepository,
     passwordHash,
     authenticationTokenManager,
   }) {
     this._authValidator = authValidator;
     this._userRepository = userRepository;
     this._authRepository = authRepository;
-    this._hostRepository = hostRepository;
     this._passwordHash = passwordHash;
     this._authenticationTokenManager = authenticationTokenManager;
   }
@@ -23,8 +21,7 @@ class CreateAuthUseCase {
       const user = await this._userRepository.getUserByEmail(email);
       this._passwordHash.validatePassword(password, user.password);
 
-      const isUserAHost = await this._hostRepository.checkIsUserAHost(user._id);
-      const tokenPayload = { id: user._id, is_host: isUserAHost };
+      const tokenPayload = { id: user._id };
 
       const accessToken = await this._authenticationTokenManager.createAccessToken(tokenPayload);
       const refreshToken = await this._authenticationTokenManager.createRefreshToken(tokenPayload);

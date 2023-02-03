@@ -261,10 +261,6 @@ container.register([
           internal: AuthRepository.name,
         },
         {
-          name: 'hostRepository',
-          internal: HostRepository.name,
-        },
-        {
           name: 'passwordHash',
           internal: PasswordHash.name,
         },
