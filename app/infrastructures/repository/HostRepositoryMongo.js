@@ -12,6 +12,10 @@ class HostRepositoryMongo extends HostRepository {
     await host.save();
   }
 
+  async updateHost(user_id, payload) {
+    await this._Host.findOneAndUpdate({ user_id }, payload);
+  }
+
   async checkIsUserAHost(id) {
     try {
       const hostCount = await this._Host.find({ user_id: id }).count();
@@ -24,6 +28,11 @@ class HostRepositoryMongo extends HostRepository {
   async validateUserIsNotAHost(id) {
     const hostCount = await this._Host.find({ user_id: id }).count();
     if (hostCount === 1) throw new InvariantError('User already be a host');
+  }
+
+  async validateUserIsAHost(id) {
+    const hostCount = await this._Host.find({ user_id: id }).count();
+    if (hostCount === 0) throw new InvariantError('User is not a host');
   }
 }
 

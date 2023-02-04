@@ -31,15 +31,16 @@ const User = require('../domains/mongoose_model/User');
 const District = require('../domains/mongoose_model/District');
 
 // use case
+const CreateAuthUseCase = require('../applications/use_case/CreateAuthUseCase');
 const CreateDistrictUseCase = require('../applications/use_case/CreateDistrictUseCase');
 const CreateHostUseCase = require('../applications/use_case/CreateHostUseCase');
-const UpdateDistrictUseCase = require('../applications/use_case/UpdateDistrictUseCase');
-const ReadDistrictsUseCase = require('../applications/use_case/ReadDistrictsUseCase');
-const CreateAuthUseCase = require('../applications/use_case/CreateAuthUseCase');
 const CreateUserUseCase = require('../applications/use_case/CreateUserUseCase');
+const ReadCheckIsHostUseCase = require('../applications/use_case/ReadCheckIsHostUseCase');
+const ReadDistrictsUseCase = require('../applications/use_case/ReadDistrictsUseCase');
+const UpdateDistrictUseCase = require('../applications/use_case/UpdateDistrictUseCase');
+const UpdateHostUseCase = require('../applications/use_case/UpdateHostUseCase');
 const ViewDistrictUseCase = require('../applications/use_case/ViewDistrictUseCase');
 const ViewEditDistrictUseCase = require('../applications/use_case/ViewEditDistrictUseCase');
-const ReadCheckIsHostUseCase = require('../applications/use_case/ReadCheckIsHostUseCase');
 
 // validator
 const AuthValidator = require('../applications/validator/AuthValidator');
@@ -146,6 +147,35 @@ container.register([
 // registering use case
 container.register([
   {
+    key: CreateAuthUseCase.name,
+    Class: CreateAuthUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'authValidator',
+          internal: AuthValidator.name,
+        },
+        {
+          name: 'userRepository',
+          internal: UserRepository.name,
+        },
+        {
+          name: 'authRepository',
+          internal: AuthRepository.name,
+        },
+        {
+          name: 'passwordHash',
+          internal: PasswordHash.name,
+        },
+        {
+          name: 'authenticationTokenManager',
+          internal: AuthenticationTokenManager.name,
+        },
+      ],
+    },
+  },
+  {
     key: CreateDistrictUseCase.name,
     Class: CreateDistrictUseCase,
     parameter: {
@@ -196,18 +226,22 @@ container.register([
     },
   },
   {
-    key: UpdateDistrictUseCase.name,
-    Class: UpdateDistrictUseCase,
+    key: CreateUserUseCase.name,
+    Class: CreateUserUseCase,
     parameter: {
       injectType: 'destructuring',
       dependencies: [
         {
-          name: 'districtRepository',
-          internal: DistrictRepository.name,
+          name: 'userRepository',
+          internal: UserRepository.name,
         },
         {
-          name: 'districtValidator',
-          internal: DistrictValidator.name,
+          name: 'userValidator',
+          internal: UserValidator.name,
+        },
+        {
+          name: 'passwordHash',
+          internal: PasswordHash.name,
         },
       ],
     },
@@ -247,26 +281,26 @@ container.register([
     },
   },
   {
-    key: CreateAuthUseCase.name,
-    Class: CreateAuthUseCase,
+    key: UpdateHostUseCase.name,
+    Class: UpdateHostUseCase,
     parameter: {
       injectType: 'destructuring',
       dependencies: [
         {
-          name: 'authValidator',
-          internal: AuthValidator.name,
+          name: 'hostRepository',
+          internal: HostRepository.name,
         },
         {
-          name: 'userRepository',
-          internal: UserRepository.name,
+          name: 'districtRepository',
+          internal: DistrictRepository.name,
         },
         {
-          name: 'authRepository',
-          internal: AuthRepository.name,
+          name: 'hostValidator',
+          internal: HostValidator.name,
         },
         {
-          name: 'passwordHash',
-          internal: PasswordHash.name,
+          name: 'mongooseValidator',
+          internal: MongooseValidator.name,
         },
         {
           name: 'authenticationTokenManager',
@@ -276,22 +310,18 @@ container.register([
     },
   },
   {
-    key: CreateUserUseCase.name,
-    Class: CreateUserUseCase,
+    key: UpdateDistrictUseCase.name,
+    Class: UpdateDistrictUseCase,
     parameter: {
       injectType: 'destructuring',
       dependencies: [
         {
-          name: 'userRepository',
-          internal: UserRepository.name,
+          name: 'districtRepository',
+          internal: DistrictRepository.name,
         },
         {
-          name: 'userValidator',
-          internal: UserValidator.name,
-        },
-        {
-          name: 'passwordHash',
-          internal: PasswordHash.name,
+          name: 'districtValidator',
+          internal: DistrictValidator.name,
         },
       ],
     },

@@ -10,6 +10,7 @@ class UpdateDistrictUseCase {
       await this._districtValidator.validateUpdateDistrictPayload(payload);
       const { id } = params;
       const { name } = payload;
+      await this._districtRepository.validateIdExist(id);
       await this._districtRepository.validateNameDoesNotExist(name);
       await this._districtRepository.editDistrict(id, name);
     } catch (e) {
