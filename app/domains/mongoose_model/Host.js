@@ -24,6 +24,10 @@ const hostSchema = new Schema({
     type: String,
     require: [true, 'phone number does not exist'],
   },
+  photo_profile_url: {
+    type: String,
+    default: 'https://firebasestorage.googleapis.com/v0/b/autover-87dfd.appspot.com/o/ic_user.png?alt=media&token=76d0aeb0-ac9f-4ed3-b2a9-378b97bd1acb',
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('host', hostSchema);
