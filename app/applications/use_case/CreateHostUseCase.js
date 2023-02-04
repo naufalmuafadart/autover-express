@@ -37,7 +37,12 @@ class CreateHostUseCase {
       // validate district
       await this._districtRepository.validateIdExist(district_id);
 
-      await this._hostRepository.addHost({ user_id, district_id });
+      const full_name = await this._userRepository.getUserFullName(user_id);
+      const phone_number = await this._userRepository.getUserPhoneNumber(user_id);
+      const phone_number_cc = await this._userRepository.getUserPhoneNumberCountryCode(user_id);
+      await this._hostRepository.addHost({
+        user_id, full_name, district_id, phone_number, phone_number_country_code: phone_number_cc,
+      });
     } catch (e) {
       throw e;
     }
