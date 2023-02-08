@@ -5,4 +5,8 @@ const createAuthPayloadSchema = Joi.object({
   password: Joi.string().min(8).required(),
 });
 
-module.exports = { createAuthPayloadSchema };
+const updateAuthPayloadSchema = Joi.object({
+  refresh_token: Joi.string().required(),
+});
+
+module.exports = { createAuthPayloadSchema, updateAuthPayloadSchema };

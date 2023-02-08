@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 
 class AuthValidator {
-  async validateSignUpPayload(payload) {
+  async validateCreateAuthPayload(payload) {
     throw Error('AUTH_VALIDATOR.METHOD_NOT_IMPLEMENTED');
   }
 
-  async validateCreateAuthPayload(payload) {
+  async validateUpdateAuthPayload(payload) {
     throw Error('AUTH_VALIDATOR.METHOD_NOT_IMPLEMENTED');
   }
 }

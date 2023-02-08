@@ -37,6 +37,7 @@ const CreateHostUseCase = require('../applications/use_case/CreateHostUseCase');
 const CreateUserUseCase = require('../applications/use_case/CreateUserUseCase');
 const ReadCheckIsHostUseCase = require('../applications/use_case/ReadCheckIsHostUseCase');
 const ReadDistrictsUseCase = require('../applications/use_case/ReadDistrictsUseCase');
+const UpdateAuthUseCase = require('../applications/use_case/UpdateAuthUseCase');
 const UpdateDistrictUseCase = require('../applications/use_case/UpdateDistrictUseCase');
 const UpdateHostUseCase = require('../applications/use_case/UpdateHostUseCase');
 const ViewDistrictUseCase = require('../applications/use_case/ViewDistrictUseCase');
@@ -276,6 +277,27 @@ container.register([
         {
           name: 'districtRepository',
           internal: DistrictRepository.name,
+        },
+      ],
+    },
+  },
+  {
+    key: UpdateAuthUseCase.name,
+    Class: UpdateAuthUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'authRepository',
+          internal: AuthRepository.name,
+        },
+        {
+          name: 'authValidator',
+          internal: AuthValidator.name,
+        },
+        {
+          name: 'authenticationTokenManager',
+          internal: AuthenticationTokenManager.name,
         },
       ],
     },

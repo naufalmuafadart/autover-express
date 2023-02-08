@@ -36,6 +36,16 @@ class JWTTokenManager extends AuthenticationTokenManager {
     }
   }
 
+  async verifyRefreshToken(token) {
+    try {
+      this.verifyStringNotUndefined(token);
+      const key = process.env.REFRESH_TOKEN_KEY;
+      return this._JWT.verify(token, key);
+    } catch (e) {
+      throw e;
+    }
+  }
+
   getTokenFromAuthorizationHeader(AuthorizationHeader) {
     try {
       this.verifyStringNotUndefined(AuthorizationHeader);

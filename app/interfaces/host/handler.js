@@ -20,6 +20,7 @@ module.exports = {
         message: 'Success register host',
       });
     } catch (err) {
+      console.log(err);
       return common_functions.handlerErrorHandler(res, err);
     }
   },

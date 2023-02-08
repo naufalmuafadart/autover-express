@@ -2,6 +2,7 @@ const container = require('../../infrastructures/container');
 
 // use case
 const CreateAuthUseCase = require('../../applications/use_case/CreateAuthUseCase');
+const UpdateAuthUseCase = require('../../applications/use_case/UpdateAuthUseCase');
 
 // tools
 const common_functions = require('../../commons/common_functions');
@@ -21,6 +22,19 @@ module.exports = {
       });
     } catch (err) {
       return common_functions.handlerErrorHandler(res, err);
+    }
+  },
+  putAuth: async (req, res) => {
+    try {
+      const updateAuthUseCase = container.getInstance(UpdateAuthUseCase.name);
+      const accessToken = await updateAuthUseCase.execute(req.body);
+      return res.status(200).json({
+        status: 'success',
+        message: 'success update token',
+        data: { accessToken },
+      });
+    } catch (e) {
+      return common_functions.handlerErrorHandler(res, e);
     }
   },
 };
