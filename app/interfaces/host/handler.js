@@ -20,7 +20,6 @@ module.exports = {
         message: 'Success register host',
       });
     } catch (err) {
-      console.log(err);
       return common_functions.handlerErrorHandler(res, err);
     }
   },
@@ -42,7 +41,7 @@ module.exports = {
       const readCheckIsHostUseCase = container.getInstance(ReadCheckIsHostUseCase.name);
       const isAHost = await readCheckIsHostUseCase.execute(AuthorizationHeader);
 
-      return res.status(201).json({
+      return res.status(200).json({
         status: 'success',
         message: 'Success check user is a host',
         data: isAHost,
