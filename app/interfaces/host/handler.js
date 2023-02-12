@@ -19,8 +19,8 @@ module.exports = {
         status: 'success',
         message: 'Success register host',
       });
-    } catch (err) {
-      return common_functions.handlerErrorHandler(res, err);
+    } catch (error) {
+      return common_functions.handlerErrorHandler(res, error);
     }
   },
   putHost: async (req, res) => {

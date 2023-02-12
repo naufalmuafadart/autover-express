@@ -15,13 +15,13 @@ module.exports = {
       const createAuthUseCase = container.getInstance(CreateAuthUseCase.name);
       const data = await createAuthUseCase.execute({ email, password });
 
-      return res.status(200).json({
+      return res.status(201).json({
         status: 'success',
         message: 'User logged in successfully',
         data,
       });
-    } catch (err) {
-      return common_functions.handlerErrorHandler(res, err);
+    } catch (error) {
+      return common_functions.handlerErrorHandler(res, error);
     }
   },
   putAuth: async (req, res) => {
@@ -33,8 +33,9 @@ module.exports = {
         message: 'success update token',
         data: { accessToken },
       });
-    } catch (e) {
-      return common_functions.handlerErrorHandler(res, e);
+    } catch (error) {
+      console.log(error);
+      return common_functions.handlerErrorHandler(res, error);
     }
   },
 };

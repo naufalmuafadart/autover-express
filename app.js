@@ -7,7 +7,10 @@ const logger = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const multer = require('multer');
 const { connect: connectToDB } = require('./config/db');
+
+const forms = multer();
 
 const adminRouter = require('./app/interfaces/admin/router');
 const userRouter = require('./app/interfaces/user/router');
@@ -33,8 +36,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json({ type: 'application/*+json' }));
+app.use(bodyParser.json());
+app.use(forms.array());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('X-HTTP-Method-Override'));

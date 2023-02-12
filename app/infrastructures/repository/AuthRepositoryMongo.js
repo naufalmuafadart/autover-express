@@ -14,7 +14,7 @@ class AuthRepositoryMongo extends AuthRepository {
 
   async validateRefreshTokenExist(refreshToken) {
     const count = await this._Auth.find({ refresh_token: refreshToken });
-    if (count === 0) throw new NotFoundError('Refresh token not found');
+    if (count.length === 0) throw new NotFoundError('Refresh token not found');
   }
 }
 
