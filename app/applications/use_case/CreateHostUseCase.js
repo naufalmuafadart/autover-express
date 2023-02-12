@@ -23,7 +23,7 @@ class CreateHostUseCase {
       // get user id
       const token = this._authenticationTokenManager
         .getTokenFromAuthorizationHeader(AuthorizationHeader);
-      const jwtPayload = await this._authenticationTokenManager.verifyAccessToken(token);
+      const jwtPayload = this._authenticationTokenManager.verifyAccessToken(token);
       const { id: user_id } = jwtPayload;
 
       // validate id

@@ -46,8 +46,8 @@ module.exports = {
         message: 'Success check user is a host',
         data: isAHost,
       });
-    } catch (err) {
-      return common_functions.handlerErrorHandler(res, err);
+    } catch (error) {
+      return common_functions.handlerErrorHandler(res, error);
     }
   },
 };

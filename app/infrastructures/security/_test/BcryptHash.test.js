@@ -1,8 +1,9 @@
+const bcrypt = require('bcrypt');
 const BcryptHash = require('../BcryptHash');
 const InvariantError = require('../../../commons/exceptions/InvariantError');
 
 describe('A BcryptHash class', () => {
-  const bcryptHash = new BcryptHash();
+  const bcryptHash = new BcryptHash(bcrypt);
 
   describe('A hashString function', () => {
     const plain_password = 'plain_password_123';

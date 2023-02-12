@@ -26,32 +26,32 @@ class JWTTokenManager extends AuthenticationTokenManager {
     }
   }
 
-  async verifyAccessToken(token) {
+  verifyAccessToken(token) {
     try {
       this.verifyStringNotUndefined(token);
       const key = process.env.ACCESS_TOKEN_KEY;
       return this._JWT.verify(token, key);
-    } catch (e) {
-      throw e;
+    } catch (error) {
+      throw new AuthorizationError(error.message);
     }
   }
 
-  async verifyRefreshToken(token) {
+  verifyRefreshToken(token) {
     try {
       this.verifyStringNotUndefined(token);
       const key = process.env.REFRESH_TOKEN_KEY;
       return this._JWT.verify(token, key);
-    } catch (e) {
-      throw e;
+    } catch (error) {
+      throw new AuthorizationError(error.message);
     }
   }
 
-  getTokenFromAuthorizationHeader(AuthorizationHeader) {
+  getTokenFromAuthorizationHeader(header) {
     try {
-      this.verifyStringNotUndefined(AuthorizationHeader);
-      return AuthorizationHeader.substring(7, AuthorizationHeader.length);
-    } catch (e) {
-      throw e;
+      this.verifyStringNotUndefined(header);
+      return header.substring(7, header.length);
+    } catch (error) {
+      throw error;
     }
   }
 }
