@@ -1,41 +1,48 @@
-// // eslint-disable-next-line max-classes-per-file
-// const ReadCheckIsHostUseCase = require('../ReadCheckIsHostUseCase');
-//
-// const payload = { id: '63db4a1ce571346564fc2ee0' };
-//
-// const hostRepository = {
-//   checkIsUserAHost: async (id) => true,
-// };
-//
-// const mongooseValidator = {
-//   validateId: () => {},
-// };
-//
-// const authenticationTokenManager = {
-//   getTokenFromAuthorizationHeader: () => '63db4a1ce571346564fc2ee0',
-//   verifyAccessToken: (token) => payload,
-// };
-//
-// describe('A ReadCheckIsHost UseCase', () => {
-//   it('should not throw error when input valid', async () => {
-//     const readCheckIsHostUseCase = new ReadCheckIsHostUseCase({
-//       hostRepository,
-//       mongooseValidator,
-//       authenticationTokenManager,
-//     });
-//     const token = 'token';
-//     const headerValue = `Bearer ${token}`;
-//     expect(() => readCheckIsHostUseCase.execute(headerValue)).not.toThrowError();
-//   });
-//
-//   it('should orchestrating ReadCheckIsHost well', async () => {
-//     const readCheckIsHostUseCase = new ReadCheckIsHostUseCase({
-//       hostRepository,
-//       mongooseValidator,
-//       authenticationTokenManager,
-//     });
-//     const token = 'token';
-//     const headerValue = `Bearer ${token}`;
-//     expect(() => readCheckIsHostUseCase.execute(headerValue)).not.toThrowError();
-//   });
-// });
+const ReadCheckIsHostUseCase = require('../ReadCheckIsHostUseCase');
+
+const hostRepository = {
+  checkIsUserAHost() {},
+};
+
+const mongooseValidator = {
+  validateId() {
+    throw new Error('');
+  },
+};
+
+const authenticationTokenManager = {
+  getTokenFromAuthorizationHeader() {},
+  verifyAccessToken() {},
+};
+
+describe('A ReadCheckIsHost use case', () => {
+  it('should orchestrating ReadCheckIsHost correctly', async () => {
+    const headerValue = '1234header';
+    const token = '1234token';
+    const id = '1234id';
+
+    const checkIsUserAHostSpy = jest.spyOn(hostRepository, 'checkIsUserAHost').mockReturnValue(true);
+    const validateIdSpy = jest.spyOn(mongooseValidator, 'validateId').mockImplementation();
+    const getTokenFromAuthorizationHeaderSpy = jest.spyOn(authenticationTokenManager, 'getTokenFromAuthorizationHeader').mockReturnValue(token);
+    const verifyAccessTokenSpy = jest.spyOn(authenticationTokenManager, 'verifyAccessToken').mockReturnValue({ id });
+
+    const readCheckIsHostUseCase = new ReadCheckIsHostUseCase({
+      hostRepository,
+      mongooseValidator,
+      authenticationTokenManager,
+    });
+
+    expect(async () => readCheckIsHostUseCase.execute(headerValue)).not.toThrowError();
+    expect(getTokenFromAuthorizationHeaderSpy).toHaveBeenCalled();
+    expect(getTokenFromAuthorizationHeaderSpy).toHaveBeenCalledWith(headerValue);
+
+    expect(verifyAccessTokenSpy).toHaveBeenCalled();
+    expect(verifyAccessTokenSpy).toHaveBeenCalledWith(token);
+
+    expect(validateIdSpy).toHaveBeenCalled();
+    expect(validateIdSpy).toHaveBeenCalledWith(id);
+
+    expect(checkIsUserAHostSpy).toHaveBeenCalled();
+    expect(checkIsUserAHostSpy).toHaveBeenCalledWith(id);
+  });
+});
