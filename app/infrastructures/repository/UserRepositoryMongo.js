@@ -19,19 +19,19 @@ class UserRepositoryMongo extends UserRepository {
   }
 
   async getUserFullName(id) {
-    const user = await this._User.findOne({ id }, 'full_name');
+    const user = await this._User.findOne({ _id: id }, 'full_name');
     if (user === null) throw new InvariantError('User not found');
     return user.full_name;
   }
 
   async getUserPhoneNumber(id) {
-    const user = await this._User.findOne({ id }, 'phone_number');
+    const user = await this._User.findOne({ _id: id }, 'phone_number');
     if (user === null) throw new InvariantError('User not found');
     return user.phone_number;
   }
 
   async getUserPhoneNumberCountryCode(id) {
-    const user = await this._User.findOne({ id }, 'phone_number_country_code');
+    const user = await this._User.findOne({ _id: id }, 'phone_number_country_code');
     if (user === null) throw new InvariantError('User not found');
     return user.phone_number_country_code;
   }
