@@ -1,12 +1,15 @@
+const RegisterAuth = require('../../domains/repository/auth/entities/RegisterAuth');
+const RegisteredUser = require('../../domains/repository/user/entities/RegisteredUser');
+
 class CreateAuthUseCase {
   constructor({
-    authValidator,
+    // authValidator,
     userRepository,
     authRepository,
     passwordHash,
     authenticationTokenManager,
   }) {
-    this._authValidator = authValidator;
+    // this._authValidator = authValidator;
     this._userRepository = userRepository;
     this._authRepository = authRepository;
     this._passwordHash = passwordHash;
@@ -15,13 +18,13 @@ class CreateAuthUseCase {
 
   async execute(payload) {
     try {
-      await this._authValidator.validateCreateAuthPayload(payload);
-      const { email, password } = payload;
-      await this._userRepository.validateEmailExist(email);
-      const user = await this._userRepository.getUserByEmail(email);
-      this._passwordHash.validatePassword(password, user.password);
+      const registerAuth = new RegisterAuth({ ...payload });
+      await this._userRepository.validateEmailExist(registerAuth.email);
+      const registeredUserPayload = await this._userRepository.getUserByEmail(registerAuth.email);
+      const registeredUser = new RegisteredUser(registeredUserPayload);
+      this._passwordHash.validatePassword(registerAuth.password, registeredUserPayload.password);
 
-      const tokenPayload = { id: user._id };
+      const tokenPayload = { id: registeredUser._id };
 
       const accessToken = await this._authenticationTokenManager.createAccessToken(tokenPayload);
       const refreshToken = await this._authenticationTokenManager.createRefreshToken(tokenPayload);

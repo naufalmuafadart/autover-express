@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 const { createContainer } = require('instances-container');
 
 // library
@@ -153,10 +154,6 @@ container.register([
     parameter: {
       injectType: 'destructuring',
       dependencies: [
-        {
-          name: 'authValidator',
-          internal: AuthValidator.name,
-        },
         {
           name: 'userRepository',
           internal: UserRepository.name,

@@ -6,7 +6,7 @@
     "dev": "nodemon ./bin/www",
     "start": "node ./bin/www",
     "lint": "npx eslint app/",
-    "jest": "jest"
+    "jest": "jest --coverage"
   },
   "dependencies": {
     "admin-lte": "^3.2.0",

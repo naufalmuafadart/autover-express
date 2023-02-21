@@ -1,5 +1,6 @@
 /node_modules
 /.idea
+/coverage
 /public/admin_lte_dist
 /public/admin_lte_plugins
 .env

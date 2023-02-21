@@ -21,6 +21,7 @@ module.exports = {
         data,
       });
     } catch (error) {
+      console.log(error);
       return common_functions.handlerErrorHandler(res, error);
     }
   },
