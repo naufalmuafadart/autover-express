@@ -9,6 +9,11 @@ describe('A ReadCheckIsHost use case', () => {
     const headerValue = '1234header';
     const token = '1234token';
     const id = '1234id';
+    const jwtPayloadPayload = {
+      id,
+      iat: 123,
+      exp: 123,
+    };
 
     const mockHostRepository = new HostRepository();
     const mockMongooseValidator = new MongooseValidator();
@@ -18,7 +23,8 @@ describe('A ReadCheckIsHost use case', () => {
     mockMongooseValidator.validateId = jest.fn().mockImplementation(() => {});
     mockAuthenticationTokenManager.getTokenFromAuthorizationHeader = jest.fn()
       .mockImplementation(() => Promise.resolve(token));
-    mockAuthenticationTokenManager.verifyAccessToken = jest.fn().mockImplementation(() => ({ id }));
+    mockAuthenticationTokenManager.verifyAccessToken = jest.fn()
+      .mockImplementation(() => jwtPayloadPayload);
 
     const readCheckIsHostUseCase = new ReadCheckIsHostUseCase({
       hostRepository: mockHostRepository,
