@@ -148,6 +148,32 @@ describe('UserRepositoryMongo', () => {
     });
   });
 
+  describe('validateIdExist function', () => {
+    it('should throw error when id does not exist', async () => {
+      // Arrange
+      const userRepository = new UserRepositoryMongo(User);
+      const fakeId = new mongoose.Types.ObjectId();
+
+      // Action and Assert
+      await expect(userRepository.validateIdExist(fakeId))
+        .rejects.toThrowError(InvariantError);
+    });
+
+    it('should not throw error when id exist', async () => {
+      // Arrange
+      const userRepository = new UserRepositoryMongo(User);
+      const payload = { email: 'johndoe@gmaili.com' };
+
+      // Action
+      await UserCollectionTestHelper.addUser({ ...payload });
+      const user = await UserCollectionTestHelper.getUserByEmail(payload.email);
+      const id = String(user._id);
+
+      // Assert
+      expect(async () => userRepository.validateIdExist(id)).not.toThrowError();
+    });
+  });
+
   describe('validateEmailExist function', () => {
     it('should throw error when email does not exist', async () => {
       // Arrange
