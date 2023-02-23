@@ -198,4 +198,29 @@ describe('UserRepositoryMongo', () => {
         .validateEmailExist(email)).not.toThrowError(InvariantError);
     });
   });
+
+  describe('validateEmailDoesNotExist', () => {
+    it('should throw error when email exist', async () => {
+      // Arrange
+      const payload = { email: 'johndoe@gmail.com' };
+      const userRepository = new UserRepositoryMongo(User);
+
+      // Action
+      await UserCollectionTestHelper.addUser({ ...payload });
+
+      // Assert
+      await expect(userRepository.validateEmailDoesNotExist(payload.email))
+        .rejects.toThrowError(InvariantError);
+    });
+
+    it('should not throw error when email does not exist', async () => {
+      // Arrange
+      const email = 'xxx@gmail.com';
+      const userRepository = new UserRepositoryMongo(User);
+
+      // Action and Assert
+      expect(async () => userRepository
+        .validateEmailDoesNotExist(email)).not.toThrowError(InvariantError);
+    });
+  });
 });
