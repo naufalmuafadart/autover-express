@@ -14,6 +14,9 @@ const UserCollectionTestHelper = {
     });
     await user.save();
   },
+  async getUserByEmail(email) {
+    return User.findOne({ email });
+  },
   async emptyCollection() {
     await User.deleteMany();
   },

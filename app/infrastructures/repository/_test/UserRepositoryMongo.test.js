@@ -15,6 +15,30 @@ describe('UserRepositoryMongo', () => {
     mongoose.connection.close();
   });
 
+  describe('addUser function', () => {
+    it('should add user to database', async () => {
+      // Arrange
+      const payload = {
+        full_name: 'John Doe',
+        phone_number: '81212341234',
+        email: 'johndoe@gmail.com',
+        password: 'SuperSecretPassword',
+      };
+
+      const userRepositoryMongo = new UserRepositoryMongo(User);
+
+      // Action
+      await userRepositoryMongo.addUser(payload);
+
+      // Assert
+      const user = await UserCollectionTestHelper.getUserByEmail(payload.email);
+      expect(typeof user).toBe('object');
+      expect(user.full_name).toEqual(payload.full_name);
+      expect(user.phone_number).toEqual(payload.phone_number);
+      expect(user.phone_number).toEqual(payload.phone_number);
+    });
+  });
+
   describe('getUserByEmail function', () => {
     it('should throw error when email does not exist', async () => {
       // Arrange
