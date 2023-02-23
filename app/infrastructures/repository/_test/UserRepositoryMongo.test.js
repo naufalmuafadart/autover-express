@@ -67,6 +67,33 @@ describe('UserRepositoryMongo', () => {
     });
   });
 
+  describe('getUserFullName function', () => {
+    it('should throw error when id not found', async () => {
+      // Arrange
+      const userRepository = new UserRepositoryMongo(User);
+      const fakeId = new mongoose.Types.ObjectId();
+
+      // Action and Assert
+      await expect(() => userRepository.getUserFullName(fakeId))
+        .rejects.toThrowError(InvariantError);
+    });
+
+    it('should return correct user full name when id exist', async () => {
+      // Arrange
+      const payload = { full_name: 'John Doe', email: 'johndoe@gmail.com' };
+      const userRepository = new UserRepositoryMongo(User);
+
+      // Action
+      await UserCollectionTestHelper.addUser({ ...payload });
+      const user = await UserCollectionTestHelper.getUserByEmail(payload.email);
+      const id = String(user._id);
+
+      // Assert
+      const full_name = await userRepository.getUserFullName(id);
+      expect(full_name).toEqual(payload.full_name);
+    });
+  });
+
   describe('validateEmailExist function', () => {
     it('should throw error when email does not exist', async () => {
       // Arrange
