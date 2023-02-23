@@ -94,6 +94,33 @@ describe('UserRepositoryMongo', () => {
     });
   });
 
+  describe('getUserPhoneNumber function', () => {
+    it('should throw error when id not found', async () => {
+      // Arrange
+      const userRepository = new UserRepositoryMongo(User);
+      const fakeId = new mongoose.Types.ObjectId();
+
+      // Action and Assert
+      await expect(() => userRepository.getUserPhoneNumber(fakeId))
+        .rejects.toThrowError(InvariantError);
+    });
+
+    it('should return correct user`s phone number when id exist', async () => {
+      // Arrange
+      const payload = { phone_number: '81212341234', email: 'johndoe@gmail.com' };
+      const userRepository = new UserRepositoryMongo(User);
+
+      // Action
+      await UserCollectionTestHelper.addUser({ ...payload });
+      const user = await UserCollectionTestHelper.getUserByEmail(payload.email);
+      const id = String(user._id);
+
+      // Assert
+      const phone_number = await userRepository.getUserPhoneNumber(id);
+      expect(phone_number).toEqual(payload.phone_number);
+    });
+  });
+
   describe('validateEmailExist function', () => {
     it('should throw error when email does not exist', async () => {
       // Arrange
