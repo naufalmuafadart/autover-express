@@ -48,7 +48,7 @@ describe('UserRepositoryMongo', () => {
       await UserCollectionTestHelper.addUser({});
 
       // Action and assert
-      await expect(async () => userRepositoryMongo.getUserByEmail('xyz@gmail.com')).rejects.toThrowError(InvariantError);
+      await expect(userRepositoryMongo.getUserByEmail('xyz@gmail.com')).rejects.toThrowError(InvariantError);
     });
 
     it('should not throw error when email does not exist', async () => {
@@ -74,7 +74,7 @@ describe('UserRepositoryMongo', () => {
       const fakeId = new mongoose.Types.ObjectId();
 
       // Action and Assert
-      await expect(() => userRepository.getUserFullName(fakeId))
+      await expect(userRepository.getUserFullName(fakeId))
         .rejects.toThrowError(InvariantError);
     });
 
@@ -101,7 +101,7 @@ describe('UserRepositoryMongo', () => {
       const fakeId = new mongoose.Types.ObjectId();
 
       // Action and Assert
-      await expect(() => userRepository.getUserPhoneNumber(fakeId))
+      await expect(userRepository.getUserPhoneNumber(fakeId))
         .rejects.toThrowError(InvariantError);
     });
 
@@ -128,7 +128,7 @@ describe('UserRepositoryMongo', () => {
       const fakeId = new mongoose.Types.ObjectId();
 
       // Action and Assert
-      await expect(() => userRepository.getUserPhoneNumberCountryCode(fakeId))
+      await expect(userRepository.getUserPhoneNumberCountryCode(fakeId))
         .rejects.toThrowError(InvariantError);
     });
 
@@ -183,7 +183,7 @@ describe('UserRepositoryMongo', () => {
 
       // Action and assert
       await UserCollectionTestHelper.addUser({ email: email1 });
-      await expect(async () => userRepositoryMongo
+      await expect(userRepositoryMongo
         .validateEmailExist(email2)).rejects.toThrowError(InvariantError);
     });
 
