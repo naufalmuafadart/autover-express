@@ -223,4 +223,29 @@ describe('UserRepositoryMongo', () => {
         .validateEmailDoesNotExist(email)).not.toThrowError(InvariantError);
     });
   });
+
+  describe('validatePhoneNumberDoesNotExist', () => {
+    it('should throw error when phone number exist', async () => {
+      // Arrange
+      const payload = { email: 'johndoe@gmail.com', phone_number: '81212341234' };
+      const userRepository = new UserRepositoryMongo(User);
+
+      // Action
+      await UserCollectionTestHelper.addUser({ ...payload });
+
+      // Assert
+      await expect(userRepository.validatePhoneNumberDoesNotExist(payload.phone_number))
+        .rejects.toThrowError(InvariantError);
+    });
+
+    it('should not throw error when phone number does not exist', async () => {
+      // Arrange
+      const phone_number = '81212345678';
+      const userRepository = new UserRepositoryMongo(User);
+
+      // Action and Assert
+      expect(async () => userRepository
+        .validatePhoneNumberDoesNotExist(phone_number)).not.toThrowError(InvariantError);
+    });
+  });
 });
