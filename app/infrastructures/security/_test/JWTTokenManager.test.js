@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const JWTTokenManager = require('../JWTTokenManager');
+const JWTPayload = require('../../../domains/repository/jwt/entities/JWTPayload');
 const AuthorizationError = require('../../../commons/exceptions/AuthorizationError');
 
 describe('A JWT Token Manager class', () => {
@@ -74,10 +75,15 @@ describe('A JWT Token Manager class', () => {
     });
 
     it('should return valid payload when valid refresh token passed', async () => {
+      // Arrange
       const token = await jwtTokenManager.createAccessToken(payload);
+
+      // Action
       const payloadReturn = jwtTokenManager.verifyAccessToken(token);
-      expect(typeof payloadReturn).toBe('object');
-      expect(payloadReturn).toHaveProperty('id', payload.id);
+
+      // Assert
+      expect(payloadReturn instanceof JWTPayload).toEqual(true);
+      expect(payloadReturn.id).toEqual(payload.id);
     });
 
     it('should throw error when invalid access token passed', () => {

@@ -2,13 +2,11 @@ const RegisterAuth = require('../../domains/repository/auth/entities/RegisterAut
 
 class CreateAuthUseCase {
   constructor({
-    // authValidator,
     userRepository,
     authRepository,
     passwordHash,
     authenticationTokenManager,
   }) {
-    // this._authValidator = authValidator;
     this._userRepository = userRepository;
     this._authRepository = authRepository;
     this._passwordHash = passwordHash;

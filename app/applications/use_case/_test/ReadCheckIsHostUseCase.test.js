@@ -2,6 +2,7 @@ const ReadCheckIsHostUseCase = require('../ReadCheckIsHostUseCase');
 const HostRepository = require('../../../domains/repository/host/HostRepository');
 const MongooseValidator = require('../../validator/MongooseValidator');
 const AuthenticationTokenManager = require('../../security/AuthenticationTokenManager');
+const JWTPayload = require('../../../domains/repository/jwt/entities/JWTPayload');
 
 describe('A ReadCheckIsHost use case', () => {
   it('should orchestrating ReadCheckIsHost correctly', async () => {
@@ -24,7 +25,7 @@ describe('A ReadCheckIsHost use case', () => {
     mockAuthenticationTokenManager.getTokenFromAuthorizationHeader = jest.fn()
       .mockImplementation(() => Promise.resolve(token));
     mockAuthenticationTokenManager.verifyAccessToken = jest.fn()
-      .mockImplementation(() => jwtPayloadPayload);
+      .mockImplementation(() => new JWTPayload(jwtPayloadPayload));
 
     const readCheckIsHostUseCase = new ReadCheckIsHostUseCase({
       hostRepository: mockHostRepository,

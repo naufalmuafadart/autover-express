@@ -1,5 +1,3 @@
-const JWTPayload = require('../../domains/repository/jwt/entities/JWTPayload');
-
 class ReadCheckIsHostUseCase {
   constructor({
     hostRepository, mongooseValidator, authenticationTokenManager,
@@ -13,8 +11,7 @@ class ReadCheckIsHostUseCase {
     try {
       const token = this._authenticationTokenManager
         .getTokenFromAuthorizationHeader(AuthorizationHeader);
-      const jwtPayloadPayload = this._authenticationTokenManager.verifyAccessToken(token);
-      const jwtPayload = new JWTPayload(jwtPayloadPayload);
+      const jwtPayload = this._authenticationTokenManager.verifyAccessToken(token);
       this._mongooseValidator.validateId(jwtPayload.id);
       return this._hostRepository.checkIsUserAHost(jwtPayload.id);
     } catch (e) {
