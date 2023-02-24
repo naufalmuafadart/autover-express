@@ -22,19 +22,13 @@ class DistrictRepositoryMongo extends DistrictRepository {
   }
 
   async getDistrict(id) {
-    try {
-      return this._District.findById(id);
-    } catch (e) {
-      throw e;
-    }
+    const district = await this._District.findById(id);
+    if (!district) throw new Error();
+    return district;
   }
 
   async editDistrict(id, name) {
-    try {
-      await this._District.findByIdAndUpdate(id, { name });
-    } catch (e) {
-      throw e;
-    }
+    await this._District.findByIdAndUpdate(id, { name });
   }
 
   async validateNameDoesNotExist(name) {
