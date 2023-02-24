@@ -6,12 +6,17 @@ const UserRepositoryMongo = require('../UserRepositoryMongo');
 const UserCollectionTestHelper = require('../../../../test/UserCollectionTestHelper');
 
 describe('UserRepositoryMongo', () => {
+  const userRepository = new UserRepositoryMongo(User);
+
   beforeAll(async () => {
     mongoose.connect(String(process.env.MONGO_URL));
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await UserCollectionTestHelper.emptyCollection();
+  });
+
+  afterAll(async () => {
     mongoose.connection.close();
   });
 
@@ -25,10 +30,8 @@ describe('UserRepositoryMongo', () => {
         password: 'SuperSecretPassword',
       };
 
-      const userRepositoryMongo = new UserRepositoryMongo(User);
-
       // Action
-      await userRepositoryMongo.addUser(payload);
+      await userRepository.addUser(payload);
 
       // Assert
       const user = await UserCollectionTestHelper.getUserByEmail(payload.email);
@@ -41,25 +44,21 @@ describe('UserRepositoryMongo', () => {
 
   describe('getUserByEmail function', () => {
     it('should throw error when email does not exist', async () => {
-      // Arrange
-      const userRepositoryMongo = new UserRepositoryMongo(User);
-
       // Action
       await UserCollectionTestHelper.addUser({});
 
       // Action and assert
-      await expect(userRepositoryMongo.getUserByEmail('xyz@gmail.com')).rejects.toThrowError(InvariantError);
+      await expect(userRepository.getUserByEmail('xyz@gmail.com')).rejects.toThrowError(InvariantError);
     });
 
     it('should not throw error when email does not exist', async () => {
       // Arrange
-      const userRepositoryMongo = new UserRepositoryMongo(User);
       const email = 'johndoe@gmail.com';
       const payload = { email };
 
       // Action
       await UserCollectionTestHelper.addUser({ ...payload });
-      const user = await userRepositoryMongo.getUserByEmail(email);
+      const user = await userRepository.getUserByEmail(email);
 
       // Assert
       expect(user).toHaveProperty('email');
@@ -70,7 +69,6 @@ describe('UserRepositoryMongo', () => {
   describe('getUserFullName function', () => {
     it('should throw error when id not found', async () => {
       // Arrange
-      const userRepository = new UserRepositoryMongo(User);
       const fakeId = new mongoose.Types.ObjectId();
 
       // Action and Assert
@@ -81,7 +79,6 @@ describe('UserRepositoryMongo', () => {
     it('should return correct user full name when id exist', async () => {
       // Arrange
       const payload = { full_name: 'John Doe', email: 'johndoe@gmail.com' };
-      const userRepository = new UserRepositoryMongo(User);
 
       // Action
       await UserCollectionTestHelper.addUser({ ...payload });
@@ -97,7 +94,6 @@ describe('UserRepositoryMongo', () => {
   describe('getUserPhoneNumber function', () => {
     it('should throw error when id not found', async () => {
       // Arrange
-      const userRepository = new UserRepositoryMongo(User);
       const fakeId = new mongoose.Types.ObjectId();
 
       // Action and Assert
@@ -108,7 +104,6 @@ describe('UserRepositoryMongo', () => {
     it('should return correct user`s phone number when id exist', async () => {
       // Arrange
       const payload = { phone_number: '81212341234', email: 'johndoe@gmail.com' };
-      const userRepository = new UserRepositoryMongo(User);
 
       // Action
       await UserCollectionTestHelper.addUser({ ...payload });
@@ -124,7 +119,6 @@ describe('UserRepositoryMongo', () => {
   describe('getUserPhoneNumberCountryCode function', () => {
     it('should throw error when id not found', async () => {
       // Arrange
-      const userRepository = new UserRepositoryMongo(User);
       const fakeId = new mongoose.Types.ObjectId();
 
       // Action and Assert
@@ -135,7 +129,6 @@ describe('UserRepositoryMongo', () => {
     it('should return correct user`s phone number country code when id exist', async () => {
       // Arrange
       const payload = { phone_number_country_code: 64, email: 'johndoe@gmail.com' };
-      const userRepository = new UserRepositoryMongo(User);
 
       // Action
       await UserCollectionTestHelper.addUser({ ...payload });
@@ -151,7 +144,6 @@ describe('UserRepositoryMongo', () => {
   describe('validateIdExist function', () => {
     it('should throw error when id does not exist', async () => {
       // Arrange
-      const userRepository = new UserRepositoryMongo(User);
       const fakeId = new mongoose.Types.ObjectId();
 
       // Action and Assert
@@ -161,7 +153,6 @@ describe('UserRepositoryMongo', () => {
 
     it('should not throw error when id exist', async () => {
       // Arrange
-      const userRepository = new UserRepositoryMongo(User);
       const payload = { email: 'johndoe@gmaili.com' };
 
       // Action
@@ -179,22 +170,20 @@ describe('UserRepositoryMongo', () => {
       // Arrange
       const email1 = 'johndoe@gmail.com';
       const email2 = 'autover@gmail.com';
-      const userRepositoryMongo = new UserRepositoryMongo(User);
 
       // Action and assert
       await UserCollectionTestHelper.addUser({ email: email1 });
-      await expect(userRepositoryMongo
+      await expect(userRepository
         .validateEmailExist(email2)).rejects.toThrowError(InvariantError);
     });
 
     it('should not throw error when email exist', async () => {
       // Arrange
       const email = 'johndoe@gmail.com';
-      const userRepositoryMongo = new UserRepositoryMongo(User);
 
       // Action and assert
       await UserCollectionTestHelper.addUser({ email });
-      expect(async () => userRepositoryMongo
+      expect(async () => userRepository
         .validateEmailExist(email)).not.toThrowError(InvariantError);
     });
   });
@@ -203,7 +192,6 @@ describe('UserRepositoryMongo', () => {
     it('should throw error when email exist', async () => {
       // Arrange
       const payload = { email: 'johndoe@gmail.com' };
-      const userRepository = new UserRepositoryMongo(User);
 
       // Action
       await UserCollectionTestHelper.addUser({ ...payload });
@@ -216,7 +204,6 @@ describe('UserRepositoryMongo', () => {
     it('should not throw error when email does not exist', async () => {
       // Arrange
       const email = 'xxx@gmail.com';
-      const userRepository = new UserRepositoryMongo(User);
 
       // Action and Assert
       expect(async () => userRepository
@@ -228,7 +215,6 @@ describe('UserRepositoryMongo', () => {
     it('should throw error when phone number exist', async () => {
       // Arrange
       const payload = { email: 'johndoe@gmail.com', phone_number: '81212341234' };
-      const userRepository = new UserRepositoryMongo(User);
 
       // Action
       await UserCollectionTestHelper.addUser({ ...payload });
@@ -241,7 +227,6 @@ describe('UserRepositoryMongo', () => {
     it('should not throw error when phone number does not exist', async () => {
       // Arrange
       const phone_number = '81212345678';
-      const userRepository = new UserRepositoryMongo(User);
 
       // Action and Assert
       expect(async () => userRepository

@@ -12,15 +12,18 @@ describe('An Auth Repository Mongo', () => {
     mongoose.connect(String(process.env.MONGO_URL));
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await AuthCollectionTestHelper.emptyCollection();
+  });
+
+  afterAll(async () => {
     mongoose.connection.close();
   });
 
   describe('addAuth function', () => {
     it('should add auth to database', async () => {
       // Arrange
-      const fakeToken = 'xxxYYY';
+      const fakeToken = 'ey.{}.signature';
 
       // Action
       await authRepositoryMongo.addAuth({ refresh_token: fakeToken });
@@ -45,10 +48,10 @@ describe('An Auth Repository Mongo', () => {
 
     it('should not throw error when refresh token exist', async () => {
       // Arrange
-      const fakeToken = 'xxxYYY';
+      const fakeToken = 'ey.{}.signature';
 
       // Action
-      await AuthCollectionTestHelper.addAuth({});
+      await AuthCollectionTestHelper.addAuth({ refresh_token: fakeToken });
 
       // Assert
       expect(async () => authRepositoryMongo
