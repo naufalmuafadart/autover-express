@@ -51,18 +51,27 @@ describe('UserRepositoryMongo', () => {
       await expect(userRepository.getUserByEmail('xyz@gmail.com')).rejects.toThrowError(InvariantError);
     });
 
-    it('should not throw error when email does not exist', async () => {
+    it('should not throw error when email exist', async () => {
       // Arrange
-      const email = 'johndoe@gmail.com';
-      const payload = { email };
+      const payload = {
+        full_name: 'John Doe',
+        phone_number_country_code: 64,
+        phone_number: '81212341234',
+        email: 'johndoe@gmail.com',
+        password: 'SuperSecretPassword',
+      };
 
       // Action
       await UserCollectionTestHelper.addUser({ ...payload });
-      const user = await userRepository.getUserByEmail(email);
+      const registeredUser = await userRepository.getUserByEmail(payload.email);
 
       // Assert
-      expect(user).toHaveProperty('email');
-      expect(user.email).toEqual(email);
+      expect(registeredUser).toHaveProperty('_id');
+      expect(registeredUser.full_name).toEqual(payload.full_name);
+      expect(registeredUser.phone_number_country_code).toEqual(payload.phone_number_country_code);
+      expect(registeredUser.phone_number).toEqual(payload.phone_number);
+      expect(registeredUser.email).toEqual(payload.email);
+      expect(registeredUser.password).toEqual(payload.password);
     });
   });
 

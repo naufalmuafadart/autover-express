@@ -1,5 +1,4 @@
 const RegisterAuth = require('../../domains/repository/auth/entities/RegisterAuth');
-const RegisteredUser = require('../../domains/repository/user/entities/RegisteredUser');
 
 class CreateAuthUseCase {
   constructor({
@@ -20,9 +19,8 @@ class CreateAuthUseCase {
     try {
       const registerAuth = new RegisterAuth({ ...payload });
       await this._userRepository.validateEmailExist(registerAuth.email);
-      const registeredUserPayload = await this._userRepository.getUserByEmail(registerAuth.email);
-      const registeredUser = new RegisteredUser(registeredUserPayload);
-      this._passwordHash.validatePassword(registerAuth.password, registeredUserPayload.password);
+      const registeredUser = await this._userRepository.getUserByEmail(registerAuth.email);
+      this._passwordHash.validatePassword(registerAuth.password, registeredUser.password);
 
       const tokenPayload = { id: registeredUser._id };
 

@@ -1,3 +1,4 @@
+const RegisteredUser = require('../../domains/repository/user/entities/RegisteredUser');
 const UserRepository = require('../../domains/repository/user/UserRepository');
 const InvariantError = require('../../commons/exceptions/InvariantError');
 
@@ -15,7 +16,8 @@ class UserRepositoryMongo extends UserRepository {
   async getUserByEmail(email) {
     const user = await this._User.findOne({ email });
     if (user === null) throw new InvariantError('Email not registered');
-    return user;
+    const registeredUser = new RegisteredUser(user);
+    return Promise.resolve(registeredUser);
   }
 
   async getUserFullName(id) {

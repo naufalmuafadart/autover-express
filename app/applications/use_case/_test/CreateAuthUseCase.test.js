@@ -4,6 +4,7 @@ const AuthRepository = require('../../../domains/repository/auth/AuthRepository'
 const UserRepository = require('../../../domains/repository/user/UserRepository');
 const PasswordHash = require('../../security/PasswordHash');
 const AuthenticationTokenManager = require('../../security/AuthenticationTokenManager');
+const RegisteredUser = require('../../../domains/repository/user/entities/RegisteredUser');
 
 describe('A Create Auth use case', () => {
   it('should orchestrating create auth correctly', async () => {
@@ -25,6 +26,7 @@ describe('A Create Auth use case', () => {
     const fakeAccessToken = 'ey.at.sig';
     const fakeRefreshToken = 'ey.rt.sig';
     const tokenPayload = { id: registeredUserPayload._id };
+    const registeredUser = new RegisteredUser(registeredUserPayload);
 
     const mockAuthRepository = new AuthRepository();
     const mockUserRepository = new UserRepository();
@@ -34,7 +36,7 @@ describe('A Create Auth use case', () => {
     mockAuthRepository.addAuth = jest.fn().mockImplementation(() => Promise.resolve({}));
     mockUserRepository.validateEmailExist = jest.fn().mockImplementation(() => Promise.resolve({}));
     mockUserRepository.getUserByEmail = jest.fn()
-      .mockImplementation(() => Promise.resolve(registeredUserPayload));
+      .mockImplementation(() => Promise.resolve(registeredUser));
     mockAuthenticationTokenManager.createAccessToken = jest.fn()
       .mockImplementation(() => Promise.resolve(fakeAccessToken));
     mockAuthenticationTokenManager.createRefreshToken = jest.fn()
