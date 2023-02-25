@@ -1,15 +1,15 @@
+const RegisterDistrict = require('../../domains/repository/district/entities/RegisterDistrict');
+
 class CreateDistrictUseCase {
-  constructor({ districtRepository, districtValidator }) {
+  constructor({ districtRepository }) {
     this._districtRepository = districtRepository;
-    this._districtValidator = districtValidator;
   }
 
   async execute(payload) {
     try {
-      await this._districtValidator.validateCreateDistrictPayload(payload);
-      const { name } = payload;
-      await this._districtRepository.validateNameDoesNotExist(name);
-      await this._districtRepository.addDistrict(name);
+      const registerDistrict = new RegisterDistrict(payload);
+      await this._districtRepository.validateNameDoesNotExist(registerDistrict.name);
+      await this._districtRepository.addDistrict(registerDistrict.name);
     } catch (e) {
       throw e;
     }

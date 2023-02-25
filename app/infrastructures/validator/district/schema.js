@@ -1,9 +1,5 @@
 const Joi = require('joi');
 
-const createDistrictPayloadSchema = Joi.object({
-  name: Joi.string().required(),
-});
-
 const updateDistrictParamsSchema = Joi.object({
   id: Joi.string().required(),
 });
@@ -17,7 +13,6 @@ const viewEditDistrictParamsSchema = Joi.object({
 });
 
 module.exports = {
-  createDistrictPayloadSchema,
   updateDistrictParamsSchema,
   updateDistrictPayloadSchema,
   viewEditDistrictParamsSchema,
