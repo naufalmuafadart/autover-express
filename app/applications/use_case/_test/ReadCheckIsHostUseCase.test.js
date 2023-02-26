@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const ReadCheckIsHostUseCase = require('../ReadCheckIsHostUseCase');
 const HostRepository = require('../../../domains/repository/host/HostRepository');
 const MongooseValidator = require('../../validator/MongooseValidator');
@@ -9,7 +10,7 @@ describe('A ReadCheckIsHost use case', () => {
     // Arrange
     const headerValue = '1234header';
     const token = '1234token';
-    const id = '1234id';
+    const id = String(new mongoose.Types.ObjectId());
     const jwtPayloadPayload = {
       id,
       iat: 123,
