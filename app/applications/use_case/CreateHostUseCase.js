@@ -1,30 +1,30 @@
+const RegisterHost = require('../../domains/repository/host/entities/RegisterHost');
+
 class CreateHostUseCase {
   constructor({
     hostRepository,
     userRepository,
     districtRepository,
-    hostValidator,
     mongooseValidator,
     authenticationTokenManager,
   }) {
     this._hostRepository = hostRepository;
     this._userRepository = userRepository;
     this._districtRepository = districtRepository;
-    this._hostValidator = hostValidator;
     this._mongooseValidator = mongooseValidator;
     this._authenticationTokenManager = authenticationTokenManager;
   }
 
   async execute(payload, AuthorizationHeader) {
     try {
-      await this._hostValidator.validateCreateHostPayload(payload);
-      const { district_id } = payload;
-
       // get user id
       const token = this._authenticationTokenManager
         .getTokenFromAuthorizationHeader(AuthorizationHeader);
       const jwtPayload = this._authenticationTokenManager.verifyAccessToken(token);
       const { id: user_id } = jwtPayload;
+
+      const registerHost = new RegisterHost(payload);
+      const { district_id } = registerHost;
 
       // validate id
       this._mongooseValidator.validateId(user_id);
