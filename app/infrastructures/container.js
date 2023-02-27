@@ -45,13 +45,11 @@ const ViewDistrictUseCase = require('../applications/use_case/ViewDistrictUseCas
 const ViewEditDistrictUseCase = require('../applications/use_case/ViewEditDistrictUseCase');
 
 // validator
-const AuthValidator = require('../applications/validator/AuthValidator');
 const HostValidator = require('../applications/validator/HostValidator');
 const DistrictValidator = require('../applications/validator/DistrictValidator');
 const MongooseValidator = require('../applications/validator/MongooseValidator');
 
 // validator infrastructure
-const AuthValidatorJoi = require('./validator/auth/AuthValidatorJoi');
 const HostValidatorJoi = require('./validator/host/HostValidatorJoi');
 const DistrictValidatorJoi = require('./validator/district/DistrictValidatorJoi');
 const MongooseValidatorMongoose = require('./validator/mongoose/MongooseValidatorMongoose');
@@ -122,10 +120,6 @@ container.register([
 
 // registering validator
 container.register([
-  {
-    key: AuthValidator.name,
-    Class: AuthValidatorJoi,
-  },
   {
     key: HostValidator.name,
     Class: HostValidatorJoi,
@@ -269,10 +263,6 @@ container.register([
         {
           name: 'authRepository',
           internal: AuthRepository.name,
-        },
-        {
-          name: 'authValidator',
-          internal: AuthValidator.name,
         },
         {
           name: 'authenticationTokenManager',

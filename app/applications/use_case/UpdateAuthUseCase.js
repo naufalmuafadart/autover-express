@@ -2,10 +2,9 @@ const UpdateAuth = require('../../domains/repository/auth/entities/UpdateAuth');
 
 class UpdateAuthUseCase {
   constructor({
-    authRepository, authValidator, authenticationTokenManager,
+    authRepository, authenticationTokenManager,
   }) {
     this._authRepository = authRepository;
-    this._authValidator = authValidator;
     this._authenticationTokenManager = authenticationTokenManager;
   }
 
