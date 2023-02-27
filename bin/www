@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('../app/infrastructures/http/createServer');
 var debug = require('debug')('autover-express:server');
 var http = require('http');
 

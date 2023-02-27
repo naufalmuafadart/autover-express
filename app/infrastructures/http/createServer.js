@@ -8,15 +8,15 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const multer = require('multer');
-const { connect: connectToDB } = require('./config/db');
+const { connect: connectToDB } = require('../../../config/db');
 
 const forms = multer();
 
-const adminRouter = require('./app/interfaces/admin/router');
-const userRouter = require('./app/interfaces/user/router');
-const authRouter = require('./app/interfaces/auth/router');
-const hostRouter = require('./app/interfaces/host/router');
-const districtRouter = require('./app/interfaces/district/router');
+const adminRouter = require('../../interfaces/admin/router');
+const userRouter = require('../../interfaces/user/router');
+const authRouter = require('../../interfaces/auth/router');
+const hostRouter = require('../../interfaces/host/router');
+const districtRouter = require('../../interfaces/district/router');
 
 // cors
 const corsOptions = { origin: process.env.FRONT_END_ORIGIN };
