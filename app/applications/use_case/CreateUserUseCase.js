@@ -1,22 +1,25 @@
+const RegisterUser = require('../../domains/repository/user/entities/RegisterUser');
+
 class CreateUserUseCase {
-  constructor({ userRepository, userValidator, passwordHash }) {
+  constructor({ userRepository, passwordHash }) {
     this._userRepository = userRepository;
-    this._userValidator = userValidator;
     this._passwordHash = passwordHash;
   }
 
   async execute(payload) {
     try {
-      await this._userValidator.validateCreateUserPayload(payload);
-      const {
-        phone_number, email, password,
-      } = payload;
-      await this._userRepository.validateEmailDoesNotExist(email);
-      await this._userRepository.validatePhoneNumberDoesNotExist(phone_number);
-      const hashedPassword = await this._passwordHash.hashString(password);
-      await this._userRepository.addUser({ ...payload, password: hashedPassword });
-    } catch (err) {
-      throw err;
+      const registerUser = new RegisterUser(payload);
+      await this._userRepository.validateEmailDoesNotExist(registerUser.email);
+      await this._userRepository.validatePhoneNumberDoesNotExist(registerUser.phone_number);
+      const hashedPassword = await this._passwordHash.hashString(registerUser.password);
+      await this._userRepository.addUser({
+        full_name: registerUser.full_name,
+        phone_number: registerUser.phone_number,
+        email: registerUser.email,
+        password: hashedPassword,
+      });
+    } catch (error) {
+      throw error;
     }
   }
 }
