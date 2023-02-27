@@ -1,3 +1,5 @@
+const UpdateAuth = require('../../domains/repository/auth/entities/UpdateAuth');
+
 class UpdateAuthUseCase {
   constructor({
     authRepository, authValidator, authenticationTokenManager,
@@ -9,12 +11,11 @@ class UpdateAuthUseCase {
 
   async execute(payload) {
     try {
-      await this._authValidator.validateUpdateAuthPayload(payload);
-      const { refresh_token } = payload;
-      this._authenticationTokenManager.verifyRefreshToken(refresh_token);
-      await this._authRepository.validateRefreshTokenExist(refresh_token);
+      const updateAuth = new UpdateAuth(payload);
+      this._authenticationTokenManager.verifyRefreshToken(updateAuth.refresh_token);
+      await this._authRepository.validateRefreshTokenExist(updateAuth.refresh_token);
       const jwtPayload = this._authenticationTokenManager
-        .verifyRefreshToken(refresh_token);
+        .verifyRefreshToken(updateAuth.refresh_token);
       return this._authenticationTokenManager.createAccessToken({ id: jwtPayload.id });
     } catch (e) {
       throw e;
