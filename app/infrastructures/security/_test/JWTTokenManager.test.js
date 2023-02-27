@@ -99,10 +99,15 @@ describe('A JWT Token Manager class', () => {
     });
 
     it('should return valid payload when valid refresh token passed', async () => {
+      // Arrange
       const token = await jwtTokenManager.createRefreshToken(payload);
+
+      // Action
       const payloadReturn = jwtTokenManager.verifyRefreshToken(token);
-      expect(typeof payloadReturn).toBe('object');
-      expect(payloadReturn).toHaveProperty('id', payload.id);
+
+      // Assert
+      expect(payloadReturn instanceof JWTPayload).toEqual(true);
+      expect(payloadReturn.id).toEqual(payload.id);
     });
 
     it('should throw error when invalid refresh token passed', () => {
