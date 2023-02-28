@@ -1,14 +1,14 @@
+const UpdateHost = require('../../domains/repository/host/entities/UpdateHost');
+
 class UpdateHostUseCase {
   constructor({
     hostRepository,
     districtRepository,
-    hostValidator,
     mongooseValidator,
     authenticationTokenManager,
   }) {
     this._hostRepository = hostRepository;
     this._districtRepository = districtRepository;
-    this._hostValidator = hostValidator;
     this._mongooseValidator = mongooseValidator;
     this._authenticationTokenManager = authenticationTokenManager;
   }
@@ -21,8 +21,8 @@ class UpdateHostUseCase {
       const jwtPayload = this._authenticationTokenManager.verifyAccessToken(token);
       const { id: user_id } = jwtPayload;
 
-      await this._hostValidator.validateUpdateHostPayload(payload);
-      const { full_name, district_id, phone_number } = payload;
+      const updateHost = new UpdateHost(payload);
+      const { full_name, district_id, phone_number } = updateHost;
 
       // validate id
       this._mongooseValidator.validateId(user_id);
